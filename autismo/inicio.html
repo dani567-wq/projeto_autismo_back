@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="inicio.css">
+    <script src="https://kit.fontawesome.com/02c5bff57b.js" crossorigin="anonymous"></script>
+     <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <style>
+    /* ── DESIGN TOKENS ─────────────────────────────────── */
+    :root {
+      --blue-deep:   #1a4a72;
+      --blue-mid:    #2d6fa0;
+      --blue-soft:   #4a90c4;
+      --blue-pale:   #d6eaf8;
+      --blue-ghost:  #eaf4fb;
+      --teal:        #2a9d8f;
+      --teal-light:  #a8dcd5;
+      --warm:        #f4a261;
+      --warm-pale:   #fdebd0;
+      --bg:          #f7fafd;
+      --surface:     #ffffff;
+      --text:        #1c2b3a;
+      --text-soft:   #4a6278;
+      --text-muted:  #7a96ab;
+      --border:      #c8dde9;
+      --radius:      14px;
+      --radius-lg:   22px;
+      --shadow-sm:   0 2px 8px rgba(26,74,114,.07);
+      --shadow-md:   0 6px 24px rgba(26,74,114,.10);
+      --shadow-lg:   0 16px 48px rgba(26,74,114,.13);
+      --font:        'Nunito', sans-serif;
+      --font-body:   'Nunito Sans', sans-serif;
+      --transition:  0.25s ease;
+      /* Accessibility overrides (toggled by JS) */
+      --font-scale: 1;
+    }
+    [data-theme="dark"] {
+      --bg:        #111d26;
+      --surface:   #172330;
+      --text:      #ddeef8;
+      --text-soft: #8ab5cc;
+      --text-muted:#5a8099;
+      --border:    #234358;
+      --blue-ghost:#172330;
+      --blue-pale: #1e3a50;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,.3);
+      --shadow-md: 0 6px 24px rgba(0,0,0,.35);
+    }
+    [data-contrast="high"] {
+      --blue-deep:  #003d73;
+      --blue-mid:   #004f99;
+      --text:       #000000;
+      --bg:         #ffffff;
+      --surface:    #ffffff;
+      --border:     #000000;
+    }
+
+    /* ── BASE ──────────────────────────────────────────── */
+    *, *::before, *::after {margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: calc(16px * var(--font-scale)); }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      transition: background var(--transition), color var(--transition);
+    }
+    a { color: var(--blue-mid); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--blue-deep); }
+    img { max-width: 100%; display: block; }
+    h1,h2,h3,h4 { font-family: var(--font); color: var(--text); line-height: 1.25; }
+    ul { list-style: none; }
+
+    /* ── SKIP LINK ─────────────────────────────────────── */
+    .skip-link {
+      position: absolute; top: -60px; left: 16px; z-index: 9999;
+      background: var(--blue-deep); color: #fff;
+      padding: 10px 20px; border-radius: var(--radius);
+      font-family: var(--font); font-weight: 700;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 16px; }
+
+    /* ── ACCESSIBILITY BAR ─────────────────────────────── */
+    .a11y-bar {
+      background: var(--blue-deep);
+      padding: 8px 40px;
+      display: flex; align-items: center; gap: 8px; justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .a11y-bar span { color: rgba(255,255,255,.55); font-size: .72rem; font-family: var(--font); letter-spacing:.05em; margin-right: 4px; }
+    .a11y-btn {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 30px;
+      color: #fff; font-family: var(--font);
+      font-size: .78rem; font-weight: 600;
+      padding: 4px 14px; cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .a11y-btn:hover { background: rgba(255,255,255,.22); transform: translateY(-1px); }
+    .a11y-btn.active { background: var(--warm); border-color: var(--warm); color: #fff; }
+
+    /* ── HEADER ────────────────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 32px;
+      display: flex; align-items: center; gap: 20px;
+      height: 70px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font); font-weight: 800;
+      font-size: 1.25rem; color: var(--blue-deep);
+      flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(#2A9D8F, #C7E6EC);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1rem;
+    }
+    nav {
+      display: flex; align-items: center; gap: 4px;
+      margin-left: auto; flex-wrap: wrap;
+    }
+    nav a {
+      padding: 7px 14px; border-radius: 8px;
+      font-family: var(--font); font-weight: 600;
+      font-size: .85rem; color: var(--text-soft);
+      transition: all var(--transition);
+    }
+    nav a:hover, nav a.active {
+      background: var(--blue-ghost);
+      color: var(--blue-deep);
+    }
+    .nav-cta {
+      background: var(--blue-mid) !important;
+      color: #fff !important; border-radius: 30px !important;
+      padding: 7px 20px !important;
+    }
+    .nav-cta:hover { background: var(--blue-deep) !important; transform: translateY(-1px); }
+    .burger { display: none; background: none; border: none; cursor: pointer; color: var(--text); font-size: 1.4rem; }
+    .mobile-nav {
+      display: none; flex-direction: column; gap: 4px;
+      padding: 12px 32px 20px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      padding: 10px 14px; border-radius: 8px;
+      font-family: var(--font); font-weight: 600;
+      font-size: .95rem; color: var(--text-soft);
+    }
+    .mobile-nav a:hover { background: var(--blue-ghost); color: var(--blue-deep); }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 80px 32px 70px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue-pale); color: var(--blue-deep);
+      border-radius: 30px; padding: 5px 16px;
+      font-family: var(--font); font-size: .78rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-badge .dot { width:7px;height:7px; background:var(--blue-mid); border-radius:50%; }
+    .hero h1 {
+      font-family: var(--font); font-size: clamp(2rem,3.5vw,2.9rem);
+     
+      line-height: 1.15; margin-bottom: 18px;
+    }
+    .hero h1 em { font-style: normal; color: var(--teal); }
+    .hero p {
+      font-size: 1.05rem; color: var(--text-soft);
+      line-height: 1.75; margin-bottom: 32px; max-width: 440px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--blue-mid); color: #fff;
+      padding: 14px 28px; border-radius: 30px;
+      font-family: var(--font); font-weight: 700; font-size: .95rem;
+      border: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all var(--transition);
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: var(--blue-deep); transform: translateY(-2px); box-shadow: var(--shadow-md); color: #fff; }
+    .btn-outline {
+      background: transparent; color: var(--blue-mid);
+      padding: 13px 26px; border-radius: 30px;
+      border: 2px solid var(--blue-mid);
+      font-family: var(--font); font-weight: 700; font-size: .95rem;
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all var(--transition);
+      text-decoration: none;
+    }
+    .btn-outline:hover { background: var(--blue-mid); color: #fff; transform: translateY(-2px); }
+
+    .hero-visual {
+      background: linear-gradient(135deg, var(--blue-pale) 0%, var(--teal-light) 100%);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .audience-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .aud-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .aud-card:hover {
+      border-color: var(--blue-soft);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .aud-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .aud-label { font-family: var(--font); font-weight: 700; font-size: .88rem; color: var(--text); }
+    .aud-sub { font-size: .75rem; color: var(--text-muted); margin-top: 3px; }
+
+    /* ── ALERT BOX ─────────────────────────────────────── */
+    .alert-box {
+      background: var(--warm-pale);
+      border-left: 4px solid var(--warm);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: .88rem; color: #7a4a1a;
+    }
+    .alert-box i { color: var(--warm); font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+
+    /* ── SECTIONS ──────────────────────────────────────── */
+    .section {
+      max-width: 1100px; margin: 0 auto;
+      padding: 70px 32px;
+    }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--blue-mid); font-family: var(--font);
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-label::before {
+      content: ''; width: 20px; height: 2px;
+      background: var(--blue-mid); border-radius: 2px;
+    }
+    .section-title {
+      font-family: var(--font); font-weight: 800;
+      font-size: clamp(1.6rem,2.5vw,2.2rem);
+      color: var(--blue-deep); margin-bottom: 14px;
+    }
+    .section-sub {
+      color: var(--text-soft); font-size: 1rem;
+      max-width: 560px; line-height: 1.75; margin-bottom: 44px;
+    }
+    .divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 0;
+    }
+    .bg-soft { background: var(--blue-ghost); }
+    .bg-teal { background: linear-gradient(135deg, #e8f7f5 0%, var(--blue-ghost) 100%); }
+
+    /* ── WHAT IS AUTISM ────────────────────────────────── */
+    .autism-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 16px;
+    }
+    .autism-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+    .autism-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--blue-soft); }
+    .autism-card-icon {
+      width: 50px; height: 50px;
+      background: var(--blue-pale); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 16px;
+    }
+    .autism-card h3 { font-family: var(--font); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .autism-card p { font-size: .88rem; color: var(--text-soft); line-height: 1.6; }
+    .facts-row {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 16px; margin-top: 30px;
+    }
+    .fact-pill {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .fact-pill i { color: var(--teal); font-size: 1.2rem; flex-shrink: 0; }
+    .fact-pill p { font-family: var(--font); font-weight: 700; font-size: .9rem; }
+
+    /* ── SIGNS TABS ────────────────────────────────────── */
+    .tabs {
+      display: flex; gap: 8px; margin-bottom: 28px;
+      border-bottom: 2px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 10px 22px;
+      background: none; border: none;
+      font-family: var(--font); font-weight: 700;
+      font-size: .9rem; color: var(--text-muted);
+      cursor: pointer; transition: all var(--transition);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+    }
+    .tab-btn.active { color: var(--blue-deep); border-bottom-color: var(--blue-mid); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeIn .3s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .signs-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+      gap: 12px;
+    }
+    .sign-item {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 12px;
+      transition: all var(--transition);
+    }
+    .sign-item:hover { border-color: var(--blue-soft); box-shadow: var(--shadow-sm); }
+    .sign-check {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--blue-pale);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--blue-mid); font-size: .85rem;
+    }
+    .sign-item p { font-size: .9rem; color: var(--text-soft); line-height: 1.55; }
+
+    /* ── QUIZ ──────────────────────────────────────────── */
+    .quiz-wrap {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .quiz-header {
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-mid));
+      padding: 30px 36px; color: #fff;
+    }
+    .quiz-header h2 { font-family: var(--font); font-size: 1.5rem; font-weight: 800; margin-bottom: 6px; }
+    .quiz-header p { font-size: .9rem; opacity: .8; }
+    .quiz-progress-bar {
+      height: 4px; background: rgba(255,255,255,.2);
+      border-radius: 2px; margin-top: 18px;
+    }
+    .quiz-progress-fill {
+      height: 100%; background: var(--teal-light);
+      border-radius: 2px; transition: width .4s ease;
+    }
+    .quiz-body { padding: 36px; }
+    .quiz-question {
+      font-family: var(--font); font-weight: 700;
+      font-size: 1.1rem; color: var(--text);
+      margin-bottom: 22px; line-height: 1.45;
+    }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+    .quiz-opt {
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 14px 18px;
+      font-family: var(--font); font-weight: 600; font-size: .95rem;
+      color: var(--text-soft); cursor: pointer;
+      transition: all var(--transition); text-align: left;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .quiz-opt:hover { border-color: var(--blue-soft); color: var(--blue-deep); background: var(--blue-ghost); }
+    .quiz-opt.selected { border-color: var(--blue-mid); background: var(--blue-pale); color: var(--blue-deep); }
+    .quiz-opt-num {
+      width: 26px; height: 26px; border-radius: 6px;
+      background: var(--border); color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .78rem; flex-shrink: 0; transition: all var(--transition);
+    }
+    .quiz-opt.selected .quiz-opt-num { background: var(--blue-mid); color: #fff; }
+    .quiz-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 28px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .quiz-counter { font-size: .85rem; color: var(--text-muted); font-family: var(--font); }
+    .quiz-result {
+      display: none; padding: 36px; text-align: center;
+    }
+    .quiz-result.show { display: block; animation: fadeIn .4s ease; }
+    .result-badge {
+      display: inline-block; padding: 8px 24px;
+      border-radius: 30px; font-family: var(--font);
+      font-weight: 800; font-size: 1rem; margin-bottom: 16px;
+    }
+    .result-badge.low { background: #d1fae5; color: #065f46; }
+    .result-badge.mid { background: var(--warm-pale); color: #92400e; }
+    .result-badge.high { background: var(--blue-pale); color: var(--blue-deep); }
+
+    /* ── RIGHTS ────────────────────────────────────────── */
+    .rights-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+      gap: 20px;
+    }
+    .right-card {
+      background: var(--surface); border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow: hidden; transition: all var(--transition);
+    }
+    .right-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .right-card-head {
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-mid));
+      padding: 22px 26px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .right-card-head i { font-size: 1.4rem; color: rgba(255,255,255,.8); }
+    .right-card-head h3 { font-family: var(--font); font-size: 1rem; font-weight: 800; color: #fff; }
+    .right-card-body { padding: 22px 26px; }
+    .right-card-body ul { display: flex; flex-direction: column; gap: 10px; }
+    .right-card-body li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .88rem; color: var(--text-soft); line-height: 1.55;
+    }
+    .right-card-body li i { color: var(--teal); flex-shrink: 0; margin-top: 3px; }
+    .lei-tag {
+      display: inline-block; background: var(--blue-pale);
+      color: var(--blue-deep); border-radius: 6px;
+      padding: 3px 10px; font-family: var(--font);
+      font-size: .72rem; font-weight: 700; margin-top: 16px;
+    }
+    .carteirinha-box {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--blue-mid) 100%);
+      border-radius: var(--radius-lg); padding: 32px;
+      color: #fff; margin-top: 28px;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 24px; align-items: center;
+    }
+    .carteirinha-box h3 { font-family: var(--font); font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+    .carteirinha-box p { font-size: .9rem; opacity: .85; line-height: 1.65; }
+    .carteirinha-badge {
+      background: rgba(255,255,255,.15);
+      border: 2px solid rgba(255,255,255,.3);
+      border-radius: var(--radius);
+      padding: 20px 24px; text-align: center; min-width: 120px;
+    }
+    .carteirinha-badge i { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+    .carteirinha-badge span { font-family: var(--font); font-size: .78rem; font-weight: 700; }
+
+    /* ── WHERE TO GET HELP ─────────────────────────────── */
+    .help-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 18px;
+    }
+    .help-card {
+      background: var(--surface); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 28px 26px;
+      transition: all var(--transition);
+    }
+    .help-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .help-type {
+      display: inline-block; border-radius: 8px;
+      padding: 4px 12px; font-family: var(--font);
+      font-size: .72rem; font-weight: 800;
+      letter-spacing: .06em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .type-public { background: var(--blue-pale); color: var(--blue-deep); }
+    .type-private { background: #fce7f3; color: #831843; }
+    .help-card h3 { font-family: var(--font); font-weight: 800; font-size: 1.05rem; margin-bottom: 8px; }
+    .help-card p { font-size: .88rem; color: var(--text-soft); line-height: 1.6; margin-bottom: 14px; }
+    .help-meta { display: flex; flex-direction: column; gap: 6px; }
+    .help-meta span {
+      display: flex; align-items: center; gap: 7px;
+      font-size: .82rem; color: var(--text-muted);
+    }
+    .help-meta span i { color: var(--blue-soft); font-size: .82rem; }
+    .help-card .btn-outline { margin-top: 18px; font-size: .85rem; padding: 9px 20px; }
+
+    /* ── FOR EDUCATORS ─────────────────────────────────── */
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+    .edu-card {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 26px 22px; border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+    .edu-card:hover { border-color: var(--teal); box-shadow: var(--shadow-sm); }
+    .edu-card-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--teal-light), var(--blue-pale));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 14px;
+    }
+    .edu-card h3 { font-family: var(--font); font-weight: 700; font-size: .95rem; margin-bottom: 8px; }
+    .edu-card p { font-size: .85rem; color: var(--text-soft); line-height: 1.6; }
+
+    /* ── DIARY ─────────────────────────────────────────── */
+    .diary-wrap {
+      background: var(--surface); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); overflow: hidden;
+    }
+    .diary-tabs { display: flex; border-bottom: 1px solid var(--border); }
+    .diary-tab {
+      flex: 1; padding: 14px 16px;
+      background: none; border: none;
+      font-family: var(--font); font-weight: 700;
+      font-size: .88rem; cursor: pointer;
+      color: var(--text-muted); transition: all var(--transition);
+      border-bottom: 3px solid transparent; margin-bottom: -1px;
+    }
+    .diary-tab.active { color: var(--blue-deep); border-bottom-color: var(--blue-mid); background: var(--blue-ghost); }
+    .diary-body { padding: 30px; }
+    .diary-panel { display: none; }
+    .diary-panel.active { display: block; animation: fadeIn .3s ease; }
+    .diary-field { margin-bottom: 20px; }
+    .diary-field label {
+      display: block; font-family: var(--font);
+      font-weight: 700; font-size: .88rem;
+      color: var(--text); margin-bottom: 8px;
+    }
+    .diary-field select,
+    .diary-field input[type="number"],
+    .diary-field textarea {
+      width: 100%; padding: 11px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius); background: var(--bg);
+      color: var(--text); font-family: var(--font-body);
+      font-size: .92rem; transition: border-color var(--transition);
+      outline: none; resize: vertical;
+    }
+    .diary-field select:focus,
+    .diary-field input[type="number"]:focus,
+    .diary-field textarea:focus { border-color: var(--blue-mid); }
+    .emoji-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .emoji-btn {
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 10px 16px;
+      font-size: 1.3rem; cursor: pointer;
+      transition: all var(--transition);
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .emoji-btn span { font-size: .68rem; font-family: var(--font); font-weight: 700; color: var(--text-muted); }
+    .emoji-btn.selected { border-color: var(--blue-mid); background: var(--blue-pale); }
+    .emoji-btn:hover { transform: scale(1.05); }
+    .range-wrap { display: flex; align-items: center; gap: 12px; }
+    .range-wrap input[type="range"] {
+      flex: 1; appearance: none;
+      height: 6px; border-radius: 3px;
+      background: var(--blue-pale); outline: none; border: none; padding: 0;
+    }
+    .range-wrap input[type="range"]::-webkit-slider-thumb {
+      appearance: none; width: 18px; height: 18px;
+      background: var(--blue-mid); border-radius: 50%; cursor: pointer;
+    }
+    .range-val {
+      font-family: var(--font); font-weight: 800;
+      color: var(--blue-deep); min-width: 28px; text-align: center;
+    }
+    .diary-save {
+      background: var(--blue-mid); color: #fff; border: none;
+      border-radius: 30px; padding: 13px 32px;
+      font-family: var(--font); font-weight: 700; font-size: .95rem;
+      cursor: pointer; transition: all var(--transition);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .diary-save:hover { background: var(--blue-deep); transform: translateY(-2px); }
+    .diary-saved-msg {
+      display: none; margin-top: 14px; padding: 12px 18px;
+      background: #d1fae5; border-radius: var(--radius);
+      color: #065f46; font-family: var(--font); font-weight: 700; font-size: .9rem;
+    }
+    .diary-saved-msg.show { display: flex; align-items: center; gap: 8px; }
+
+    /* ── CONTACT ───────────────────────────────────────── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .contact-form { background: var(--surface); border-radius: var(--radius-lg); padding: 36px; border: 1px solid var(--border); }
+    .contact-form h3 { font-family: var(--font); font-weight: 800; font-size: 1.2rem; margin-bottom: 6px; }
+    .contact-form p { font-size: .88rem; color: var(--text-soft); margin-bottom: 24px; }
+    .form-field { margin-bottom: 16px; }
+    .form-field label { display: block; font-family: var(--font); font-weight: 700; font-size: .85rem; margin-bottom: 6px; }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%; padding: 11px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius); background: var(--bg);
+      color: var(--text); font-family: var(--font-body);
+      font-size: .92rem; transition: border-color var(--transition);
+      outline: none; resize: vertical;
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--blue-mid); }
+    .form-lgpd {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin: 16px 0 22px; font-size: .82rem; color: var(--text-soft); line-height: 1.55;
+    }
+    .form-lgpd input { width: auto; flex-shrink: 0; margin-top: 2px; }
+    .contact-info { display: flex; flex-direction: column; gap: 18px; }
+    .info-card {
+      background: var(--surface); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 24px;
+    }
+    .info-card h4 { font-family: var(--font); font-weight: 800; margin-bottom: 14px; font-size: .95rem; }
+    .info-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; font-size: .88rem; color: var(--text-soft); }
+    .info-row i { color: var(--blue-mid); flex-shrink: 0; margin-top: 3px; }
+
+    /* ── ADULT SECTION ─────────────────────────────────── */
+    .adult-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+    .adult-card {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 24px 20px; border: 1px solid var(--border);
+      text-align: center; transition: all var(--transition);
+    }
+    .adult-card:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .adult-card i { font-size: 2rem; color: var(--teal); margin-bottom: 12px; display: block; }
+    .adult-card h3 { font-family: var(--font); font-weight: 700; font-size: .95rem; margin-bottom: 8px; }
+    .adult-card p { font-size: .83rem; color: var(--text-soft); line-height: 1.6; }
+
+    /* ── FOOTER ────────────────────────────────────────── */
+    footer {
+      background: var(--blue-deep); color: rgba(255,255,255,.7);
+      padding: 30px;
+      width: 100%;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand .logo { color: #fff; margin-bottom: 12px; display: flex; }
+    .footer-brand p { font-size: .85rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-family: var(--font); font-weight: 800; font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.5); margin-bottom: 16px; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: .85rem; color: rgba(255,255,255,.55); transition: color var(--transition); }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: .8rem; }
+    .disclaimer { background: rgba(255,255,255,.07); border-radius: var(--radius); padding: 14px 18px; font-size: .8rem; color: rgba(255,255,255,.5); line-height: 1.65; margin-top: 28px; margin-bottom: 28px; border-left: 3px solid rgba(255,255,255,.2); }
+    
+    /* ── SCROLL REVEAL ─────────────────────────────────── */
+    .reveal { opacity:0; transform:translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px 50px; }
+      .hero-visual { padding: 28px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .facts-row { grid-template-columns: 1fr; }
+      .carteirinha-box { grid-template-columns: 1fr; }
+      nav { display: none; }
+      .burger { display: block; margin-left: auto; }
+      .a11y-bar { padding: 8px 20px; }
+    }
+    @media (max-width: 600px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .section { padding: 50px 20px; }
+      .audience-cards { grid-template-columns: 1fr 1fr; }
+      .a11y-bar { gap: 6px; }
+    }
+  </style>
+</head>
+
+<body>
+   
+  
+
+
+<!-- Skip link for accessibility -->
+<a href="#main" class="skip-link">Ir para o conteúdo principal</a>
+
+<!-- ACCESSIBILITY BAR -->
+<div class="a11y-bar" role="toolbar" aria-label="Ferramentas de acessibilidade">
+  <span>Acessibilidade:</span>
+  <button class="a11y-btn" id="btnDark" onclick="toggleDark()" aria-label="Alternar modo escuro">
+    <i class="fa-solid fa-moon"></i> Modo escuro
+  </button>
+  <button class="a11y-btn" id="btnContrast" onclick="toggleContrast()" aria-label="Alto contraste">
+    <i class="fa-solid fa-circle-half-stroke"></i> Alto contraste
+  </button>
+  <button class="a11y-btn" onclick="changeFont(1)" aria-label="Aumentar fonte">
+    <i class="fa-solid fa-plus"></i> Texto
+  </button>
+  <button class="a11y-btn" onclick="changeFont(-1)" aria-label="Diminuir fonte">
+    <i class="fa-solid fa-minus"></i> Texto
+  </button>
+  <button class="a11y-btn" id="btnCalm" onclick="toggleCalm()" aria-label="Modo calmo - menos estímulos visuais">
+    <i class="fa-solid fa-leaf"></i> Modo calmo
+  </button>
+</div>
+
+
+  
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo" aria-label="EspectroVivo - Página inicial">
+      <div class="logo-icon" aria-hidden="true"><i class="fa-solid fa-infinity"></i></div>
+     Laço azul
+    </a>
+    <nav aria-label="Navegação principal">
+      <a href="#oquee" class="active">O que é TEA</a>
+      <a href="#sinais">Sinais</a>
+      <a href="#direitos">Direitos</a>
+      <a href="#educadores">Educadores</a>
+      <a href="#adultos">Adultos</a>
+      <a href="#ajuda">Onde buscar ajuda</a>
+      <a href="#diario" class="nav-cta">Meu Diário</a>
+    </nav>
+    <button class="burger" onclick="toggleMobileNav()" aria-label="Abrir menu" aria-expanded="false" id="burgerBtn">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+  
+</header>
+  
+
+    <section class="sec1">
+        <div class="primaria">
+        <h1><h1>Compreenda o <br><span class="distaque">Autismo</span></h1> <br></h1>
+        
+        <p>Informacão acessivel e apoio para pais, adultos e <br> educadores na jornada do transtorno do espectro
+            Autista.</p>
+
+                </div>
+            <div class="ciranda">
+                <img src="ciranda-roda-criancas-brincando-removebg-preview.png" alt="">
+            </div>
+    </section>
+
+    <main>
+        <h2>Por que o laço Azul?</h2>
+
+        <div class="geral">
+            <div class="ic">
+                <i class="fa-solid fa-book-open icon"></i>
+                <h3>Informação Clara</h3>
+                <p>Contúdo acessivele baseado em evidências sobre o Transtorno do Espectro Autista.</p>
+            </div>
+
+            <div class="qi">
+                <i class="fa-solid fa-clipboard icon" ></i>
+                <h3>Questionário Inicial</h3>
+                <p>Ferramentas de traigem para identificar sinais e buscar orientação profissional.</p>
+            </div>
+            <div class="Aa">
+                <i class="fa-solid fa-heart icon" ></i>
+                <h3>Acompanhamento</h3>
+                <p>Diário de humor e comportamento para melhor compreensão e suporte.</p>
+                
+            </div>
+        </div>
+<br><br><br><br>
+<!-- MAIN -->
+<main id="main">
+
+  <!-- ── HERO ── -->
+  <section style="background: linear-gradient(180deg, var(--blue-ghost) 0%, var(--bg) 100%);" aria-labelledby="hero-title">
+    <div class="hero">
+      <div>
+        <div class="hero-badge"><span class="dot" aria-hidden="true"></span>Informação acessível e confiável</div>
+        <h1 id="hero-title">
+          Entenda o <em>Transtorno do<br>Espectro Autista</em><br>com clareza.
+        </h1>
+        <p>
+          Um espaço pensado para famílias, adultos autistas e educadores. Sem julgamentos, sem sobrecarga — informação direta, apoio real e orientação em cada etapa.
+        </p>
+        <div class="hero-btns">
+          <a href="fgdf.html" class="btn-primary"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Entender o TEA</a>
+          <a href="#diario" class="btn-outline"><i class="fa-solid fa-pencil" aria-hidden="true"></i> Meu Diário</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Atalhos por perfil de usuário">
+        <p style="font-family:var(--font);font-weight:800;font-size:.88rem;color:var(--blue-deep);margin-bottom:4px;">Selecione seu perfil:</p>
+        <div class="audience-cards">
+          <div class="aud-card" role="button" tabindex="0" onclick="scrollTo('#sinais')" onkeypress="if(event.key==='Enter')document.querySelector('#sinais').scrollIntoView()">
+            <div class="aud-icon">👨‍👩‍👦</div>
+            <div class="aud-label">Sou pai/mãe</div>
+            <div class="aud-sub">Sinais e orientação</div>
+          </div>
+          <div class="aud-card" role="button" tabindex="0" onclick="document.querySelector('#adultos').scrollIntoView({behavior:'smooth'})">
+            <div class="aud-icon">🙋</div>
+            <div class="aud-label">Sou adulto</div>
+            <div class="aud-sub">Diagnóstico tardio</div>
+          </div>
+          <div class="aud-card" role="button" tabindex="0" onclick="document.querySelector('#educadores').scrollIntoView({behavior:'smooth'})">
+            <div class="aud-icon">👩‍🏫</div>
+            <div class="aud-label">Sou educador</div>
+            <div class="aud-sub">Inclusão na escola</div>
+          </div>
+          <div class="aud-card" role="button" tabindex="0" onclick="document.querySelector('#ajuda').scrollIntoView({behavior:'smooth'})">
+            <div class="aud-icon">🏥</div>
+            <div class="aud-label">Busco apoio</div>
+            <div class="aud-sub">CAPS e profissionais</div>
+          </div>
+        </div>
+        <div class="alert-box" role="note">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          <span><strong>Importante:</strong> Este site fornece orientação e informação. <strong>Não substitui avaliação médica ou diagnóstico profissional.</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ── O QUE É TEA ── -->
+  <section id="oquee" class="section" aria-labelledby="oquee-title">
+    <div class="section-label">Entendendo o TEA</div>
+    <h2 class="section-title reveal" id="oquee-title">O que é o Transtorno do<br>Espectro Autista?</h2>
+    <p class="section-sub reveal">O TEA é uma condição do neurodesenvolvimento — não é doença, não é falha, não tem cura. É uma forma diferente de perceber e interagir com o mundo. Cada pessoa autista é única.</p>
+    <div class="autism-grid">
+      <div class="autism-card reveal">
+        <div class="autism-card-icon" aria-hidden="true"></div>
+        <h3>Comunicação</h3>
+        <p>Pode haver diferenças na comunicação verbal e não-verbal, como dificuldade com linguagem figurada, ironia ou entonação.</p>
+      </div>
+      <div class="autism-card reveal reveal-d1">
+        <div class="autism-card-icon" aria-hidden="true"></div>
+        <h3>Interação Social</h3>
+        <p>Dificuldade em interpretar gestos, expressões faciais e normas sociais implícitas. Não significa falta de afeto.</p>
+      </div>
+      <div class="autism-card reveal reveal-d2">
+        <div class="autism-card-icon" aria-hidden="true"></div>
+        <h3>Comportamentos Repetitivos</h3>
+        <p>Rotinas rígidas, movimentos repetitivos (stimming) e interesses muito específicos e intensos são comuns.</p>
+      </div>
+      <div class="autism-card reveal reveal-d3">
+        <div class="autism-card-icon" aria-hidden="true">🎧</div>
+        <h3>Sensibilidade Sensorial</h3>
+        <p>Pode haver hiper ou hipossensibilidade a sons, luz, toque, cheiros e sabores — o ambiente importa muito.</p>
+      </div>
+    </div>
+    <div class="facts-row reveal" style="margin-top:28px;">
+      <div class="fact-pill">
+        <i class="fa-solid fa-check-circle" aria-hidden="true"></i>
+        <p>Não é doença — é uma neurodivergência</p>
+      </div>
+      <div class="fact-pill">
+        <i class="fa-solid fa-check-circle" aria-hidden="true"></i>
+        <p>Tem acompanhamento e intervenção eficaz</p>
+      </div>
+      <div class="fact-pill">
+        <i class="fa-solid fa-check-circle" aria-hidden="true"></i>
+        <p>Cada pessoa no espectro é única</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ── SINAIS ── -->
+  <div class="bg-soft">
+  <section id="sinais" class="section" aria-labelledby="sinais-title">
+    <div class="section-label">Identificação</div>
+    <h2 class="section-title reveal" id="sinais-title">Sinais de alerta</h2>
+    <p class="section-sub reveal">Conhecer os sinais ajuda na busca por avaliação precoce. <strong>Esta lista é apenas orientativa — só um profissional pode diagnosticar.</strong></p>
+    <div class="tabs" role="tablist" aria-label="Sinais por faixa etária">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-infantil" onclick="switchTab(this,'tab-infantil')">Crianças pequenas (1–3 anos)</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-maiores" onclick="switchTab(this,'tab-maiores')">Crianças maiores</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-adultos-sinais" onclick="switchTab(this,'tab-adultos-sinais')">Adultos</button>
+    </div>
+    <div id="tab-infantil" class="tab-panel active" role="tabpanel">
+      <div class="signs-grid">
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Não responde quando chamado pelo nome</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Não aponta para objetos de interesse</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Evita contato visual direto</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Atraso no desenvolvimento da fala</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Movimentos repetitivos (sacudir mãos, girar)</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Reação intensa a sons, luz ou texturas</p></div>
+      </div>
+    </div>
+    <div id="tab-maiores" class="tab-panel" role="tabpanel">
+      <div class="signs-grid">
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Dificuldade em fazer e manter amizades</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Interesse muito intenso em um único assunto</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Resistência a mudanças na rotina</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Crises intensas quando algo muda inesperadamente</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Dificuldade de interpretar expressões faciais</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Fala muito literal, dificuldade com ironia</p></div>
+      </div>
+    </div>
+    <div id="tab-adultos-sinais" class="tab-panel" role="tabpanel">
+      <div class="signs-grid">
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Sensação de "sempre ter sido diferente"</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Cansaço extremo após interações sociais (esgotamento)</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Hiperfoco: concentração intensa em temas específicos</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Hipersensibilidade a sons, luz e texturas</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Dificuldade de entender regras sociais implícitas</p></div>
+        <div class="sign-item"><div class="sign-check" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></div><p>Mascaramento: esforço para parecer "normal"</p></div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ── QUIZ ── -->
+  <section class="section" aria-labelledby="quiz-title">
+    <div class="section-label">Checklist orientativo</div>
+    <h2 class="section-title reveal" id="quiz-title">Questionário de Orientação</h2>
+    <p class="section-sub reveal">Responda às perguntas abaixo para ter uma orientação inicial. <strong>Não é diagnóstico.</strong> O resultado apenas indica se vale buscar avaliação profissional.</p>
+    <div class="quiz-wrap reveal">
+      <div class="quiz-header">
+        <h2>Checklist TEA – Orientativo</h2>
+        <p>Selecione a opção que melhor descreve a situação.</p>
+        <div class="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="quizProgressBar">
+          <div class="quiz-progress-fill" id="quizFill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="quiz-body" id="quizBody">
+        <div class="quiz-question" id="quizQuestion" aria-live="polite"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-nav">
+          <span class="quiz-counter" id="quizCounter" aria-live="polite"></span>
+          <button class="btn-primary" id="quizNext" onclick="quizNext()" aria-label="Próxima pergunta">
+            Próxima <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <div class="quiz-result" id="quizResult" role="region" aria-label="Resultado do questionário">
+        <div id="resultBadge" class="result-badge"></div>
+        <h3 id="resultTitle" style="font-family:var(--font);font-size:1.3rem;font-weight:800;margin-bottom:12px;"></h3>
+        <p id="resultText" style="font-size:.95rem;color:var(--text-soft);line-height:1.75;max-width:520px;margin:0 auto 24px;"></p>
+        <button class="btn-primary" onclick="resetQuiz()"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Refazer questionário</button>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ── DIREITOS ── -->
+  <div class="bg-teal">
+  <section id="direitos" class="section" aria-labelledby="direitos-title">
+    <div class="section-label">Legislação e direitos</div>
+    <h2 class="section-title reveal" id="direitos-title">Direitos da Pessoa Autista</h2>
+    <p class="section-sub reveal">A Lei Berenice Piana (Lei nº 12.764/2012) garantiu direitos fundamentais. Conhecê-los é o primeiro passo para exercê-los. A maioria é gratuita e não precisa de advogado.</p>
+    <div class="rights-grid">
+      <div class="right-card reveal">
+        <div class="right-card-head">
+          <i class="fa-solid fa-bus" aria-hidden="true"></i>
+          <h3>Transporte e Mobilidade</h3>
+        </div>
+        <div class="right-card-body">
+          <ul>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Passe livre em transportes coletivos urbanos, interurbanos e interestaduais</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Prioridade no embarque e desembarque</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Isenção de pedágio em veículo adaptado (varia por estado)</li>
+          </ul>
+          <span class="lei-tag">Lei nº 12.764/2012 · Lei nº 8.899/1994</span>
+        </div>
+      </div>
+      <div class="right-card reveal reveal-d1">
+        <div class="right-card-head">
+          <i class="fa-solid fa-ticket" aria-hidden="true"></i>
+          <h3>Lazer e Cultura</h3>
+        </div>
+        <div class="right-card-body">
+          <ul>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Meia-entrada em cinemas, teatros, shows e eventos culturais</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Direito ao acompanhante sem cobrança adicional</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Prioridade nos caixas e filas de atendimento</li>
+          </ul>
+          <span class="lei-tag">Lei nº 12.933/2013</span>
+        </div>
+      </div>
+      <div class="right-card reveal reveal-d2">
+        <div class="right-card-head">
+          <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+          <h3>Educação Inclusiva</h3>
+        </div>
+        <div class="right-card-body">
+          <ul>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Matrícula obrigatória em escola regular</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Direito ao acompanhante/auxiliar escolar quando necessário</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Plano Educacional Individualizado (PEI)</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Adaptações de provas e metodologia</li>
+          </ul>
+          <span class="lei-tag">LDB Art. 58 · Lei Berenice Piana</span>
+        </div>
+      </div>
+      <div class="right-card reveal">
+        <div class="right-card-head">
+          <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+          <h3>Trabalho e Família</h3>
+        </div>
+        <div class="right-card-body">
+          <ul>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Redução de jornada de trabalho para responsável por pessoa autista (sem redução de salário, em muitos casos)</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Saque do PIS/PASEP e FGTS para custeio de tratamento</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Cotas em concursos públicos e empresas</li>
+          </ul>
+          <span class="lei-tag">CLT · Lei nº 8.036/1990</span>
+        </div>
+      </div>
+      <div class="right-card reveal reveal-d1">
+        <div class="right-card-head">
+          <i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>
+          <h3>Isenções Fiscais</h3>
+        </div>
+        <div class="right-card-body">
+          <ul>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Isenção de IPVA para veículo adaptado para uso da pessoa autista</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Isenção de IPI na compra de veículo adaptado</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Dedução no Imposto de Renda das despesas com tratamento</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> ICMS com alíquota reduzida em alguns estados</li>
+          </ul>
+          <span class="lei-tag">Lei nº 8.989/1995 · Decreto nº 3.298</span>
+        </div>
+      </div>
+      <div class="right-card reveal reveal-d2">
+        <div class="right-card-head">
+          <i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i>
+          <h3>Benefícios Sociais</h3>
+        </div>
+        <div class="right-card-body">
+          <ul>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> BPC/LOAS: benefício mensal para autistas com renda familiar per capita de até 1/4 do salário mínimo</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Prioridade em atendimento em qualquer estabelecimento (bancos, hospitais, cartórios)</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Acesso prioritário ao SUS e a medicações</li>
+          </ul>
+          <span class="lei-tag">LOAS · Lei nº 10.048/2000</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARTEIRINHA -->
+    <div class="carteirinha-box reveal" role="complementary" aria-label="Informações sobre a Carteirinha de Identificação">
+      <div>
+        <h3>Carteirinha de Identificação da Pessoa Autista</h3>
+        <p>
+          Toda pessoa com TEA tem direito à Carteirinha oficial de identificação (Lei nº 13.977/2020 – Lei Romeo Mion). Ela facilita o acesso a todos os direitos acima, o atendimento prioritário e a identificação em situações de crise.<br><br>
+          Em Caririaçu-CE, muitos usam a <strong>Carteirinha do Girassol</strong> (símbolo internacional da deficiência oculta) — ela é válida e reconhecida. Mas a carteirinha específica do TEA garante identificação mais precisa e é um direito de cada pessoa.
+        </p>
+      </div>
+      <div class="carteirinha-badge" aria-label="Ícone de carteirinha">
+        <i class="fa-solid fa-id-card" aria-hidden="true"></i>
+        <span>Carteirinha<br>TEA</span>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ── ADULTOS ── -->
+  <section id="adultos" class="section" aria-labelledby="adultos-title">
+    <div class="section-label">Diagnóstico tardio</div>
+    <h2 class="section-title reveal" id="adultos-title">Sou adulto e suspeito que<br>tenho autismo</h2>
+    <p class="section-sub reveal">Muitas pessoas só recebem diagnóstico na fase adulta — especialmente mulheres. Isso não invalida a experiência de vida nem os direitos. Você não está sozinho(a).</p>
+    <div class="adult-grid">
+      <div class="adult-card reveal">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <h3>Como buscar diagnóstico</h3>
+        <p>Procure psiquiatra ou neuropsicólogo especializado. O SUS oferece avaliação via encaminhamento do CAPS ou UBS.</p>
+      </div>
+      <div class="adult-card reveal reveal-d1">
+        <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+        <h3>Seus direitos legais</h3>
+        <p>O diagnóstico tardio garante os mesmos direitos. Acesso a benefícios, isenções e prioridades a partir do laudo.</p>
+      </div>
+      <div class="adult-card reveal reveal-d2">
+        <i class="fa-solid fa-building" aria-hidden="true"></i>
+        <h3>Mercado de trabalho</h3>
+        <p>Empresas com 100+ funcionários têm cota para PCDs. Adaptações razoáveis no trabalho são um direito seu.</p>
+      </div>
+      <div class="adult-card reveal reveal-d3">
+        <i class="fa-solid fa-people-group" aria-hidden="true"></i>
+        <h3>Como explicar à família</h3>
+        <p>O diagnóstico pode liberar anos de autocobrança. Material psicoeducativo para família disponível na Biblioteca.</p>
+      </div>
+      <div class="adult-card reveal">
+        <i class="fa-solid fa-ear-deaf" aria-hidden="true"></i>
+        <h3>Sobrecarga sensorial</h3>
+        <p>Entenda seus gatilhos e aprenda estratégias de regulação. Use fones, óculos de sol, evite picos de estimulação.</p>
+      </div>
+      <div class="adult-card reveal reveal-d1">
+        <i class="fa-solid fa-heart" aria-hidden="true"></i>
+        <h3>Autocuidado e identidade</h3>
+        <p>Diagnóstico é ferramenta de autoconhecimento. Comunidades online e grupos de apoio fazem grande diferença.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ── EDUCADORES ── -->
+  <div class="bg-soft">
+  <section id="educadores" class="section" aria-labelledby="edu-title">
+    <div class="section-label">Para a escola</div>
+    <h2 class="section-title reveal" id="edu-title">Área para Educadores</h2>
+    <p class="section-sub reveal">Inclusão real vai além de aceitar a matrícula. Requer adaptação ativa, comunicação com a família e estratégias práticas aplicadas no dia a dia da sala de aula.</p>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-card-icon" aria-hidden="true">📋</div>
+        <h3>Plano Educacional Individualizado (PEI)</h3>
+        <p>Documente metas, adaptações e estratégias específicas para cada aluno. O PEI é um direito do aluno e uma ferramenta do professor.</p>
+      </div>
+      <div class="edu-card reveal reveal-d1">
+        <div class="edu-card-icon" aria-hidden="true">📝</div>
+        <h3>Adaptação de Provas e Atividades</h3>
+        <p>Linguagem objetiva, tempo extra, ambiente com menos estímulos. Adaptar não é facilitar — é dar igualdade de condições.</p>
+      </div>
+      <div class="edu-card reveal reveal-d2">
+        <div class="edu-card-icon" aria-hidden="true">🚨</div>
+        <h3>Como lidar com crise em sala</h3>
+        <p>Mantenha calma. Reduza estímulos. Não force contato físico. Avise a família. Tenha um espaço de regulação disponível.</p>
+      </div>
+      <div class="edu-card reveal reveal-d3">
+        <div class="edu-card-icon" aria-hidden="true">📞</div>
+        <h3>Comunicação com a Família</h3>
+        <p>Relatórios regulares, caderno de comunicação, agenda diária. Família e escola como parceiros, não adversários.</p>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-card-icon" aria-hidden="true">🔊</div>
+        <h3>Rotina Visual</h3>
+        <p>Antecipe mudanças com antecedência. Use figuras, cores e sequências visuais. Previsibilidade reduz ansiedade.</p>
+      </div>
+      <div class="edu-card reveal reveal-d1">
+        <div class="edu-card-icon" aria-hidden="true">🤝</div>
+        <h3>Inclusão Real em Grupo</h3>
+        <p>Trabalhos em dupla, mediação de conflitos e ensino de habilidades sociais explícitas ajudam toda a turma.</p>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ── DIÁRIO ── -->
+  <section id="diario" class="section" aria-labelledby="diario-title">
+    <div class="section-label">Acompanhamento</div>
+    <h2 class="section-title reveal" id="diario-title">Meu Diário</h2>
+    <p class="section-sub reveal">Registre comportamentos, humor e evolução dia a dia. Os dados ficam salvos no seu dispositivo e podem ser levados organizados para o médico ou CAPS.</p>
+    <div class="quiz-wrap reveal">
+      <div class="diary-tabs" role="tablist">
+        <button class="diary-tab active" role="tab" aria-selected="true" aria-controls="dpanel-crianca" onclick="switchDiary(this,'dpanel-crianca')">👦 Para crianças</button>
+        <button class="diary-tab" role="tab" aria-selected="false" aria-controls="dpanel-adulto" onclick="switchDiary(this,'dpanel-adulto')">🙋 Para adultos</button>
+      </div>
+      <div class="diary-body">
+        <!-- Criança -->
+        <div id="dpanel-crianca" class="diary-panel active">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div class="diary-field">
+              <label for="d-data">📅 Data</label>
+              <input type="date" id="d-data" value=""/>
+            </div>
+            <div class="diary-field">
+              <label for="d-sono">🌙 Horas de sono</label>
+              <input type="number" id="d-sono" min="0" max="24" placeholder="Ex: 8" style="width:100%"/>
+            </div>
+          </div>
+          <div class="diary-field">
+            <label>😊 Humor do dia</label>
+            <div class="emoji-row" role="group" aria-label="Selecione o humor">
+              <button class="emoji-btn" onclick="selectEmoji(this,'humor')" data-val="muito-calmo" aria-label="Muito calmo">😌<span>Muito calmo</span></button>
+              <button class="emoji-btn" onclick="selectEmoji(this,'humor')" data-val="calmo" aria-label="Calmo">🙂<span>Calmo</span></button>
+              <button class="emoji-btn" onclick="selectEmoji(this,'humor')" data-val="agitado" aria-label="Agitado">😤<span>Agitado</span></button>
+              <button class="emoji-btn" onclick="selectEmoji(this,'humor')" data-val="crise" aria-label="Teve crise">😰<span>Crise</span></button>
+            </div>
+          </div>
+          <div class="diary-field">
+            <label>🗣️ Comunicação hoje</label>
+            <div class="emoji-row" role="group" aria-label="Selecione a comunicação">
+              <button class="emoji-btn" onclick="selectEmoji(this,'comun')" data-val="palavras" aria-label="Falou palavras novas">💬<span>Palavras novas</span></button>
+              <button class="emoji-btn" onclick="selectEmoji(this,'comun')" data-val="gestos" aria-label="Usou gestos">🤟<span>Gestos</span></button>
+              <button class="emoji-btn" onclick="selectEmoji(this,'comun')" data-val="interagiu" aria-label="Interagiu com alguém">👋<span>Interagiu</span></button>
+              <button class="emoji-btn" onclick="selectEmoji(this,'comun')" data-val="pouco" aria-label="Pouca comunicação">🤐<span>Pouco</span></button>
+            </div>
+          </div>
+          <div class="diary-field">
+            <label for="d-comport">🔁 Comportamentos repetitivos</label>
+            <select id="d-comport">
+              <option value="">Selecione...</option>
+              <option value="baixo">Baixa frequência</option>
+              <option value="medio">Frequência média</option>
+              <option value="alto">Alta frequência</option>
+            </select>
+          </div>
+          <div class="diary-field">
+            <label for="d-crise">⚠️ Teve crise? Descreva (duração e possível causa)</label>
+            <textarea id="d-crise" rows="2" placeholder="Ex: 10 min após mudança de atividade..."></textarea>
+          </div>
+          <div class="diary-field">
+            <label for="d-obs">📝 Observações livres</label>
+            <textarea id="d-obs" rows="3" placeholder="Algo que queira registrar..."></textarea>
+          </div>
+          <button class="diary-save" onclick="saveDiary('crianca')" aria-label="Salvar registro do diário">
+            <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Salvar registro
+          </button>
+          <div class="diary-saved-msg" id="diary-saved-msg" role="status" aria-live="polite">
+            <i class="fa-solid fa-check-circle"></i> Registro salvo com sucesso!
+          </div>
+        </div>
+        <!-- Adulto -->
+        <div id="dpanel-adulto" class="diary-panel">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div class="diary-field">
+              <label for="da-data">📅 Data</label>
+              <input type="date" id="da-data"/>
+            </div>
+          </div>
+          <div class="diary-field">
+            <label for="da-social">🧍 Nível de energia social (0 = esgotado / 10 = cheio)</label>
+            <div class="range-wrap">
+              <input type="range" id="da-social" min="0" max="10" value="5" oninput="updateRange(this,'da-social-val')"/>
+              <span class="range-val" id="da-social-val">5</span>
+            </div>
+          </div>
+          <div class="diary-field">
+            <label for="da-sens">🎧 Sensibilidade sensorial hoje (0 = baixa / 10 = intensa)</label>
+            <div class="range-wrap">
+              <input type="range" id="da-sens" min="0" max="10" value="5" oninput="updateRange(this,'da-sens-val')"/>
+              <span class="range-val" id="da-sens-val">5</span>
+            </div>
+          </div>
+          <div class="diary-field">
+            <label for="da-foco">🎯 Foco e produtividade (0 = zero / 10 = excelente)</label>
+            <div class="range-wrap">
+              <input type="range" id="da-foco" min="0" max="10" value="5" oninput="updateRange(this,'da-foco-val')"/>
+              <span class="range-val" id="da-foco-val">5</span>
+            </div>
+          </div>
+          <div class="diary-field">
+            <label for="da-stress">😮 Situação que gerou estresse (opcional)</label>
+            <textarea id="da-stress" rows="2" placeholder="Ex: reunião barulhenta, mudança de planos..."></textarea>
+          </div>
+          <div class="diary-field">
+            <label for="da-estrategia">✅ Estratégia usada para se regular</label>
+            <textarea id="da-estrategia" rows="2" placeholder="Ex: saí por 10 minutos, usei fone de ouvido..."></textarea>
+          </div>
+          <div class="diary-field">
+            <label for="da-obs">📝 Observações</label>
+            <textarea id="da-obs" rows="2" placeholder="Qualquer anotação importante..."></textarea>
+          </div>
+          <button class="diary-save" onclick="saveDiary('adulto')" aria-label="Salvar registro do diário">
+            <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Salvar registro
+          </button>
+          <div class="diary-saved-msg" id="diary-saved-msg-adulto" role="status" aria-live="polite">
+            <i class="fa-solid fa-check-circle"></i> Registro salvo!
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ── ONDE BUSCAR AJUDA ── -->
+  <div class="bg-soft">
+  <section id="ajuda" class="section" aria-labelledby="ajuda-title">
+    <div class="section-label">Rede de apoio</div>
+    <h2 class="section-title reveal" id="ajuda-title">Onde buscar ajuda</h2>
+    <p class="section-sub reveal">Rede pública e particular. Sem julgamento e sem preferência política — o objetivo é conectar você à ajuda que precisa.</p>
+    <div class="help-grid">
+      <div class="help-card reveal">
+        <span class="help-type type-public">Rede Pública</span>
+        <h3>CAPS – Centro de Atenção Psicossocial</h3>
+        <p>Porta de entrada para avaliação, diagnóstico e acompanhamento multidisciplinar via SUS. Encaminhamento pela UBS ou diretamente.</p>
+        <div class="help-meta">
+          <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Caririaçu-CE – consulte na prefeitura</span>
+          <span><i class="fa-solid fa-phone" aria-hidden="true"></i> Via UBS ou Secretaria de Saúde</span>
+          <span><i class="fa-solid fa-clock" aria-hidden="true"></i> Seg–Sex, horário comercial</span>
+        </div>
+        <a href="#contato" class="btn-outline"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Saiba como chegar</a>
+      </div>
+      <div class="help-card reveal reveal-d1">
+        <span class="help-type type-public">Rede Pública</span>
+        <h3>UBS – Unidade Básica de Saúde</h3>
+        <p>Primeiro contato para suspeita de TEA. O clínico geral faz o encaminhamento para especialistas e para o CAPS.</p>
+        <div class="help-meta">
+          <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Mais próxima da sua residência</span>
+          <span><i class="fa-solid fa-id-card" aria-hidden="true"></i> Leve RG, CPF e cartão SUS</span>
+        </div>
+        <a href="#contato" class="btn-outline"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Orientações</a>
+      </div>
+      <div class="help-card reveal reveal-d2">
+        <span class="help-type type-private">Rede Particular</span>
+        <h3>Psicólogos e Neuropsicólogos</h3>
+        <p>Avaliação diagnóstica detalhada e acompanhamento terapêutico. Alguns aceitam plano de saúde. Pergunte sobre psicologia social.</p>
+        <div class="help-meta">
+          <span><i class="fa-solid fa-star" aria-hidden="true"></i> Cadastre-se para indicar profissionais</span>
+          <span><i class="fa-solid fa-shield" aria-hidden="true"></i> Dados protegidos por LGPD</span>
+        </div>
+        <a href="#contato" class="btn-outline"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Fale com especialista</a>
+      </div>
+      <div class="help-card reveal reveal-d3">
+        <span class="help-type type-private">Rede Particular</span>
+        <h3>Fonoaudiologia e Terapia Ocupacional</h3>
+        <p>Essenciais para comunicação, integração sensorial e autonomia. Muitos planos de saúde cobrem quando há diagnóstico ou laudo.</p>
+        <div class="help-meta">
+          <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> Exija laudo de encaminhamento</span>
+          <span><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i> Faça parte do tratamento multidisciplinar</span>
+        </div>
+        <a href="#contato" class="btn-outline"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Ver profissionais</a>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ── CONTATO ── -->
+  <section id="contato" class="section" aria-labelledby="contato-title">
+    <div class="section-label">Fale com especialista</div>
+    <h2 class="section-title reveal" id="contato-title">Entre em contato</h2>
+    <p class="section-sub reveal">Preencha o formulário abaixo. Um profissional da nossa rede entrará em contato. Não substituímos consulta médica.</p>
+    <div class="contact-grid">
+      <div class="contact-form reveal">
+        <h3>Envie sua dúvida</h3>
+        <p>Responderemos em até 48 horas úteis.</p>
+        <div class="form-field">
+          <label for="c-nome">Nome completo</label>
+          <input type="text" id="c-nome" placeholder="Seu nome" autocomplete="name"/>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="form-field">
+            <label for="c-idade">Idade</label>
+            <input type="number" id="c-idade" placeholder="Ex: 35" min="0" max="120"/>
+          </div>
+          <div class="form-field">
+            <label for="c-tel">Telefone / WhatsApp</label>
+            <input type="tel" id="c-tel" placeholder="(88) 9 9999-9999" autocomplete="tel"/>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="c-tipo">Sou...</label>
+          <select id="c-tipo">
+            <option value="">Selecione</option>
+            <option>Pai/Mãe de criança com suspeita de TEA</option>
+            <option>Adulto com suspeita de TEA</option>
+            <option>Educador buscando orientação</option>
+            <option>Profissional de saúde</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="c-msg">Sua dúvida ou mensagem</label>
+          <textarea id="c-msg" rows="4" placeholder="Descreva brevemente..."></textarea>
+        </div>
+        <div class="form-lgpd">
+          <input type="checkbox" id="c-lgpd" required/>
+          <label for="c-lgpd">Autorizo o uso dos meus dados para retorno de contato, conforme a <strong>LGPD (Lei nº 13.709/2018)</strong>. Seus dados não serão compartilhados.</label>
+        </div>
+        <button class="btn-primary" onclick="submitForm()" aria-label="Enviar formulário de contato">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Enviar mensagem
+        </button>
+        <div id="form-success" style="display:none;margin-top:14px;padding:12px 18px;background:#d1fae5;border-radius:var(--radius);color:#065f46;font-family:var(--font);font-weight:700;" role="status" aria-live="polite">
+          ✅ Mensagem enviada! Retornaremos em breve.
+        </div>
+      </div>
+      <div class="contact-info reveal reveal-d1">
+        <div class="info-card">
+          <h4> Lembre-se sempre</h4>
+          <div class="info-row"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Este formulário <strong>não substitui</strong> consulta médica ou diagnóstico.</div>
+          <div class="info-row"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Em caso de urgência, procure diretamente a UBS ou CAPS da sua cidade.</div>
+          <div class="info-row"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Nunca inicie medicação sem prescrição médica.</div>
+        </div>
+        <div class="info-card">
+          <h4> CAPS – Caririaçu-CE</h4>
+          <div class="info-row"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Consulte a Secretaria Municipal de Saúde para endereço atualizado</div>
+          <div class="info-row"><i class="fa-solid fa-clock" aria-hidden="true"></i>Segunda a Sexta – horário comercial</div>
+          <div class="info-row"><i class="fa-solid fa-info-circle" aria-hidden="true"></i>Encaminhamento via UBS ou por demanda espontânea</div>
+        </div>
+        <div class="info-card">
+          <h4> Recursos Online</h4>
+          <div class="info-row"><i class="fa-solid fa-link" aria-hidden="true"></i>CFM – Conselho Federal de Medicina</div>
+          <div class="info-row"><i class="fa-solid fa-link" aria-hidden="true"></i>Autismo e Realidade (ONG)</div>
+          <div class="info-row"><i class="fa-solid fa-link" aria-hidden="true"></i>Canal Minha Vida Autista (YouTube)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div class="disclaimer" role="note">
+      <strong> Aviso importante:</strong> Este site tem caráter educativo e informativo. Não realiza diagnóstico, não prescreve tratamentos e não substitui a avaliação de médicos, psicólogos ou demais profissionais de saúde. Em situações de emergência, procure o serviço de saúde mais próximo.
+    </div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon" aria-hidden="true"><i class="fa-solid fa-infinity"></i></div>
+         Laço azul
+        </div>
+        <p>Informação acessível sobre autismo para famílias, adultos autistas e educadores de Caririaçu-CE e região.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Conteúdo</h4>
+        <ul>
+          <li><a href="#oquee">O que é TEA</a></li>
+          <li><a href="#sinais">Sinais de alerta</a></li>
+          <li><a href="#direitos">Direitos</a></li>
+          <li><a href="#adultos">Adultos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Suporte</h4>
+        <ul>
+          <li><a href="#educadores">Para educadores</a></li>
+          <li><a href="#ajuda">Onde buscar ajuda</a></li>
+          <li><a href="#diario">Meu Diário</a></li>
+          <li><a href="#contato">Fale conosco</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Política de Privacidade</a></li>
+          <li><a href="#">LGPD</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 EspectroVivo · Feito com cuidado em Caririaçu-CE</span>
+      <span>Dados protegidos pela LGPD · Lei Berenice Piana nº 12.764/2012</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── ACCESSIBILITY ── */
+  let fontScale = 1;
+  let calmMode = false;
+
+  function toggleDark() {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    document.documentElement.dataset.theme = isDark ? '' : 'dark';
+    document.getElementById('btnDark').classList.toggle('active', !isDark);
+  }
+  function toggleContrast() {
+    const isHigh = document.documentElement.dataset.contrast === 'high';
+    document.documentElement.dataset.contrast = isHigh ? '' : 'high';
+    document.getElementById('btnContrast').classList.toggle('active', !isHigh);
+  }
+  function changeFont(dir) {
+    fontScale = Math.max(0.85, Math.min(1.4, fontScale + dir * 0.1));
+    document.documentElement.style.setProperty('--font-scale', fontScale);
+  }
+  function toggleCalm() {
+    calmMode = !calmMode;
+    document.getElementById('btnCalm').classList.toggle('active', calmMode);
+    // Remove animations in calm mode
+    const style = document.getElementById('calmStyle') || document.createElement('style');
+    style.id = 'calmStyle';
+    style.textContent = calmMode ? '* { animation: none !important; transition: none !important; }' : '';
+    document.head.appendChild(style);
+  }
+
+  /* ── MOBILE NAV ── */
+  function toggleMobileNav() {
+    const nav = document.getElementById('mobileNav');
+    const btn = document.getElementById('burgerBtn');
+    const isOpen = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  }
+
+  /* ── STICKY HEADER ── */
+  window.addEventListener('scroll', () => {
+    document.querySelector('header').style.boxShadow = window.scrollY > 10 ? 'var(--shadow-md)' : 'var(--shadow-sm)';
+  });
+
+  /* ── TABS ── */
+  function switchTab(btn, panelId) {
+    document.querySelectorAll('.tabs .tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+    document.getElementById(panelId).classList.add('active');
+  }
+  function switchDiary(btn, panelId) {
+    document.querySelectorAll('.diary-tab').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    document.querySelectorAll('.diary-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+    document.getElementById(panelId).classList.add('active');
+  }
+
+  /* ── QUIZ ── */
+  const quizQuestions = [
+    { q: "A pessoa não responde consistentemente quando chamada pelo nome?", opts: ["Nunca ou raramente", "Às vezes", "Frequentemente", "Sempre"] },
+    { q: "Há dificuldade notável em manter contato visual durante conversas?", opts: ["Não", "Às vezes", "Sim, bastante", "Sim, muito intensamente"] },
+    { q: "Existem comportamentos repetitivos (balançar, girar objetos, rotinas rígidas)?", opts: ["Não", "Levemente", "Moderadamente", "Intensamente"] },
+    { q: "Há sensibilidade extrema a sons, luzes, texturas ou cheiros?", opts: ["Não", "Levemente", "Moderadamente", "Muito intensamente"] },
+    { q: "Há dificuldade em fazer amigos ou interações sociais parecem esgotantes?", opts: ["Não", "Às vezes", "Frequentemente", "Sempre"] },
+    { q: "Existe foco muito intenso em um único tema ou assunto por longos períodos?", opts: ["Não", "Às vezes", "Com frequência", "É uma característica central"] },
+    { q: "Há atraso na fala ou dificuldade de comunicar necessidades?", opts: ["Não", "Leve atraso", "Atraso significativo", "Sem fala funcional"] },
+  ];
+  let quizIndex = 0;
+  let quizScore = 0;
+  let quizSelected = null;
+
+  function renderQuiz() {
+    const q = quizQuestions[quizIndex];
+    document.getElementById('quizQuestion').textContent = `${quizIndex+1}. ${q.q}`;
+    document.getElementById('quizCounter').textContent = `Pergunta ${quizIndex+1} de ${quizQuestions.length}`;
+    const fill = ((quizIndex)/quizQuestions.length*100).toFixed(0);
+    document.getElementById('quizFill').style.width = fill + '%';
+    document.getElementById('quizProgressBar').setAttribute('aria-valuenow', fill);
+    const opts = document.getElementById('quizOptions');
+    opts.innerHTML = '';
+    q.opts.forEach((opt,i) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.innerHTML = `<span class="quiz-opt-num">${String.fromCharCode(65+i)}</span>${opt}`;
+      btn.setAttribute('aria-label', opt);
+      btn.onclick = () => {
+        opts.querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        quizSelected = i;
+      };
+      opts.appendChild(btn);
+    });
+    quizSelected = null;
+    document.getElementById('quizNext').textContent = quizIndex < quizQuestions.length-1 ? 'Próxima →' : 'Ver resultado →';
+  }
+
+  function quizNext() {
+    if (quizSelected === null) { alert('Por favor, selecione uma opção.'); return; }
+    quizScore += quizSelected;
+    quizIndex++;
+    if (quizIndex >= quizQuestions.length) {
+      showResult();
+    } else { renderQuiz(); }
+  }
+
+  function showResult() {
+    document.getElementById('quizFill').style.width = '100%';
+    document.getElementById('quizBody').style.display = 'none';
+    const res = document.getElementById('quizResult');
+    res.classList.add('show');
+    const max = (quizQuestions.length-1)*3;
+    const pct = quizScore / max;
+    let badge, title, text;
+    if (pct < 0.35) {
+      badge = 'low'; badge = '<span class="result-badge low">Indicadores baixos</span>';
+      title = 'Poucos indicadores presentes';
+      text = 'As respostas indicam poucos sinais associados ao TEA. Isso não descarta a possibilidade, mas sugere que buscar avaliação não é urgente. Se tiver dúvidas, converse com seu médico de confiança.';
+    } else if (pct < 0.65) {
+      badge = '<span class="result-badge mid">Indicadores moderados</span>';
+      title = 'Vale conversar com um profissional';
+      text = 'Algumas características levantadas merecem atenção. Recomendamos buscar avaliação com pediatra, psicólogo ou psiquiatra. Um diagnóstico precoce faz grande diferença. Procure o CAPS ou UBS da sua cidade.';
+    } else {
+      badge = '<span class="result-badge high">Indicadores significativos</span>';
+      title = 'Busque avaliação especializada';
+      text = 'O número de indicadores presentes sugere fortemente que vale buscar avaliação profissional o quanto antes. Isso não é diagnóstico — é um sinal de atenção. Procure o CAPS, pediatra ou neurologista. Quanto mais cedo, melhor.';
+    }
+    document.getElementById('resultBadge').outerHTML = badge;
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultText').textContent = text;
+  }
+
+  function resetQuiz() {
+    quizIndex = 0; quizScore = 0; quizSelected = null;
+    document.getElementById('quizBody').style.display = 'block';
+    document.getElementById('quizResult').classList.remove('show');
+    document.getElementById('quizFill').style.width = '0%';
+    renderQuiz();
+  }
+
+  /* ── DIARY ── */
+  function selectEmoji(btn, group) {
+    btn.closest('.emoji-row').querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+  function updateRange(input, valId) {
+    document.getElementById(valId).textContent = input.value;
+  }
+  function saveDiary(type) {
+    const today = new Date().toISOString().split('T')[0];
+    const msgId = type === 'crianca' ? 'diary-saved-msg' : 'diary-saved-msg-adulto';
+    const msg = document.getElementById(msgId);
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 3000);
+  }
+
+  /* ── FORM ── */
+  function submitForm() {
+    const lgpd = document.getElementById('c-lgpd').checked;
+    if (!lgpd) { alert('Por favor, autorize o uso dos seus dados para prosseguir.'); return; }
+    document.getElementById('form-success').style.display = 'block';
+  }
+
+  /* ── SCROLL REVEAL ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => ro.observe(el));
+
+  /* ── SET TODAY DATE ── */
+  const today = new Date().toISOString().split('T')[0];
+  ['d-data','da-data'].forEach(id => { const el = document.getElementById(id); if(el) el.value = today; });
+
+  /* ── INIT QUIZ ── */
+  renderQuiz();
+</script>
+</body>
+</html>
+
