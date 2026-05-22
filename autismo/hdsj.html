@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autismo Info</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+    body { background:#f5f5f5; color:#333; }.navbar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:15px 40px; background:white;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+.logo { font-weight:bold; color:#4f46e5; }
+
+.nav-links a {
+  margin-left:20px; text-decoration:none; color:#555;
+}
+
+.nav-links a.active {
+  color:#4f46e5; border-bottom:2px solid #4f46e5;
+}
+
+header {
+  background:linear-gradient(135deg,#4f46e5,#9333ea);
+  color:white; padding:80px 20px; position:relative;
+}
+
+header::after {
+  content:""; position:absolute; right:50px; top:50%;
+  width:200px; height:200px; border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  transform:translateY(-50%);
+}
+
+.hero-content { max-width:1000px; margin:auto; }
+
+header h1 { font-size:2.8rem; }
+header h1 span { color:#fde047; }
+
+header p { margin-top:15px; opacity:0.9; }
+
+.container { max-width:1000px; margin:auto; padding:30px 20px; }
+
+.cards {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+.card {
+  padding:20px; border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  text-align:center;
+}
+
+.red{background:#ffe4e6;} .green{background:#dcfce7;} .purple{background:#ede9fe;}
+
+footer {
+  background:linear-gradient(135deg,#4f46e5,#9333ea);
+  color:white; text-align:center; padding:30px;
+}
+
+  </style>
+</head>
+<body><div class="navbar">
+  <div class="logo">AutismoInfo</div>
+  <div class="nav-links">
+    <a href="#">Início</a>
+    <a href="#" class="active">O que é Autismo</a>
+    <a href="#">Características</a>
+    <a href="#">Apoio</a>
+    <a href="#">Recursos</a>
+  </div>
+
+</div><header>
+  <div class="hero-content">
+    <h1>O que é <span>Autismo?</span></h1>
+    <p>Uma jornada de compreensão sobre o Transtorno do Espectro Autista</p>
+  </div>
+</header>
+<div class="container">
+  <h2>Fatos Importantes</h2>
+  <div class="cards">
+    <div class="card red">Não é uma doença</div>
+    <div class="card green">Não tem cura</div>
+    <div class="card purple">Cada pessoa é única</div>
+  </div>
+</div><footer>
+  Continue aprendendo
+</footer></body>
+</html>

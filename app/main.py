@@ -1,9 +1,5 @@
 """
 Ponto de entrada da aplicação FastAPI — projeto_autismo.
-
-Documentação (Swagger / ReDoc):
-  Desabilitada em produção — endpoints /docs e /redoc não são expostos.
-  Em desenvolvimento, ficam ativos normalmente.
 """
 
 from contextlib import asynccontextmanager
@@ -17,24 +13,31 @@ from sqlalchemy import text
 from app.core.settings import settings
 from app.domains.auth import routers as auth_routers
 from app.domains.users import routers as users_routers
-from app.shared.db.database import get_session
+from app.domains.diario import routers as diario_routers
+from app.domains.contato import routers as contato_routers
+from app.shared.db.database import get_session, engine
+from app.shared.db.registry import mapper_registry
 from app.shared.schemas import HealthResponse
+
+# Import models so they are registered
+import app.domains.users.models  # noqa
+import app.domains.diario.models  # noqa
+import app.domains.contato.models  # noqa
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """
-    Executado na inicialização (antes do yield) e no encerramento (após).
-    """
+    # Auto-create all tables on startup
+    async with engine.begin() as conn:
+        await conn.run_sync(mapper_registry.metadata.create_all)
     yield
 
 
-# Docs desabilitadas em produção
 _docs_url = '/docs' if settings.ENVIRONMENT != 'production' else None
 _redoc_url = '/redoc' if settings.ENVIRONMENT != 'production' else None
 
 app = FastAPI(
-    title='projeto_autismo',
+    title='Laço Azul — Projeto Autismo',
     lifespan=lifespan,
     redirect_slashes=False,
     docs_url=_docs_url,
@@ -43,10 +46,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        'http://localhost:5173',
-        'http://127.0.0.1:5173',
-    ],
+    allow_origins=['*'],
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
@@ -54,13 +54,12 @@ app.add_middleware(
 
 app.include_router(auth_routers.router)
 app.include_router(users_routers.router)
+app.include_router(diario_routers.router)
+app.include_router(contato_routers.router)
 
 
 @app.get('/', status_code=HTTPStatus.OK, response_model=HealthResponse)
 async def read_root():
-    """
-    Health check — retorna status da API, ambiente e conectividade com o banco.
-    """
     db_status = 'offline'
     db_url_display = settings.RESOLVED_DATABASE_URL
 
@@ -71,17 +70,8 @@ async def read_root():
     except Exception:
         pass
 
-    if settings.ENVIRONMENT == 'production':
-        try:
-            parsed = urlparse(db_url_display)
-            db_url_display = parsed._replace(
-                netloc=f'***:***@{parsed.hostname}:{parsed.port}'
-            ).geturl()
-        except Exception:
-            db_url_display = '(oculto em produção)'
-
     return HealthResponse(
-        message='Olá Mundo!',
+        message='Olá Mundo! API Laço Azul ativa.',
         environment=settings.ENVIRONMENT,
         database_status=db_status,
         database_url=db_url_display,
