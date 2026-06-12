@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        
+    .section {
+      max-width: 1100px; margin: 0 auto;
+      padding: 70px 32px;
+    }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--blue-mid); font-family: var(--font);
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-label::before {
+      content: ''; width: 20px; height: 2px;
+      background: var(--blue-mid); border-radius: 2px;
+    }
+    .section-title {
+      font-family: var(--font); font-weight: 800;
+      font-size: clamp(1.6rem,2.5vw,2.2rem);
+      color: var(--blue-deep); margin-bottom: 14px;
+    }
+    .section-sub {
+      color: var(--text-soft); font-size: 1rem;
+      max-width: 560px; line-height: 1.75; margin-bottom: 44px;
+    }
+    .divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 0;
+    }
+    .bg-soft { background: var(--blue-ghost); }
+    .bg-teal { background: linear-gradient(135deg, #e8f7f5 0%, var(--blue-ghost) 100%); }
+    </style>
+    
+  <!-- ── O QUE É TEA ── -->
+  <section id="oquee" class="section" aria-labelledby="oquee-title">
+    <div class="section-label">Entendendo o TEA</div>
+    <h2 class="section-title reveal" id="oquee-title">O que é o Transtorno do<br>Espectro Autista?</h2>
+    <p class="section-sub reveal">O TEA é uma condição do neurodesenvolvimento — não é doença, não é falha, não tem cura. É uma forma diferente de perceber e interagir com o mundo. Cada pessoa autista é única.</p>
+    <div class="autism-grid">
+      <div class="autism-card reveal">
+        <div class="autism-card-icon" aria-hidden="true">💬</div>
+        <h3>Comunicação</h3>
+        <p>Pode haver diferenças na comunicação verbal e não-verbal, como dificuldade com linguagem figurada, ironia ou entonação.</p>
+      </div>
+      <div class="autism-card reveal reveal-d1">
+        <div class="autism-card-icon" aria-hidden="true">🤝</div>
+        <h3>Interação Social</h3>
+        <p>Dificuldade em interpretar gestos, expressões faciais e normas sociais implícitas. Não significa falta de afeto.</p>
+      </div>
+      <div class="autism-card reveal reveal-d2">
+        <div class="autism-card-icon" aria-hidden="true">🔁</div>
+        <h3>Comportamentos Repetitivos</h3>
+        <p>Rotinas rígidas, movimentos repetitivos (stimming) e interesses muito específicos e intensos são comuns.</p>
+      </div>
+      <div class="autism-card reveal reveal-d3">
+        <div class="autism-card-icon" aria-hidden="true">🎧</div>
+        <h3>Sensibilidade Sensorial</h3>
+        <p>Pode haver hiper ou hipossensibilidade a sons, luz, toque, cheiros e sabores — o ambiente importa muito.</p>
+      </div>
+    </div>
+    <div class="facts-row reveal" style="margin-top:28px;">
+      <div class="fact-pill">
+        <i class="fa-solid fa-check-circle" aria-hidden="true"></i>
+        <p>Não é doença — é uma neurodivergência</p>
+      </div>
+      <div class="fact-pill">
+        <i class="fa-solid fa-check-circle" aria-hidden="true"></i>
+        <p>Tem acompanhamento e intervenção eficaz</p>
+      </div>
+      <div class="fact-pill">
+        <i class="fa-solid fa-check-circle" aria-hidden="true"></i>
+        <p>Cada pessoa no espectro é única</p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
