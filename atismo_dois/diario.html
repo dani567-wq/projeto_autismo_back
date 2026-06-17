@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Diário — Laço Azul</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --blue-deep:  #1a4a72;
+      --blue-mid:   #2d6fa0;
+      --blue-soft:  #4a90c4;
+      --blue-pale:  #d6eaf8;
+      --blue-ghost: #eaf4fb;
+      --teal:       #2a9d8f;
+      --teal-light: #a8dcd5;
+      --warm:       #f4a261;
+      --warm-pale:  #fdebd0;
+      --bg:         #f7fafd;
+      --surface:    #ffffff;
+      --text:       #1c2b3a;
+      --text-soft:  #4a6278;
+      --text-muted: #7a96ab;
+      --border:     #c8dde9;
+      --radius:     14px;
+      --radius-lg:  22px;
+      --shadow-sm:  0 2px 8px rgba(26,74,114,.07);
+      --shadow-md:  0 6px 24px rgba(26,74,114,.12);
+      --shadow-lg:  0 16px 48px rgba(26,74,114,.15);
+      --font:       'Nunito', sans-serif;
+      --font-body:  'Nunito Sans', sans-serif;
+      --transition: 0.25s ease;
+      --sidebar-w:  260px;
+      --font-scale: 1;
+    }
+    [data-theme="dark"] {
+      --bg:        #111d26; --surface:  #172330; --text:     #ddeef8;
+      --text-soft: #8ab5cc; --text-muted:#5a8099; --border:  #234358;
+      --blue-ghost:#172330; --blue-pale:#1e3a50;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,.3); --shadow-md:0 6px 24px rgba(0,0,0,.4);
+    }
+    [data-contrast="high"] {
+      --blue-deep:#003d73; --blue-mid:#004f99; --text:#000; --bg:#fff; --surface:#fff; --border:#000;
+    }
+
+    html { scroll-behavior: smooth; font-size: calc(16px * var(--font-scale)); }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font-body); line-height:1.7;
+      transition: background var(--transition), color var(--transition);
+      min-height: 100vh; display: flex;
+    }
+    a { color: var(--blue-mid); text-decoration: none; }
+    h1,h2,h3,h4 { font-family: var(--font); color: var(--text); line-height:1.25; }
+
+    /* ── SIDEBAR ────────────────────── */
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      height: 100vh; position: sticky; top: 0;
+      display: flex; flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      overflow-y: auto;
+      transition: transform var(--transition);
+    }
+    .sidebar-brand {
+      padding: 22px 24px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--blue-mid), var(--teal));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: .95rem; flex-shrink: 0;
+    }
+    .logo-text {
+      font-family: var(--font); font-weight: 900;
+      font-size: 1.05rem; color: var(--blue-deep); line-height: 1.1;
+    }
+    .logo-text span {
+      display: block; font-size: .68rem; font-weight: 600;
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: .07em;
+    }
+
+    .sidebar-user {
+      padding: 16px 20px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--border);
+      background: var(--blue-ghost);
+    }
+    .user-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-mid), var(--teal));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-family: var(--font); font-weight: 800; font-size: .95rem;
+      flex-shrink: 0;
+    }
+    .user-info { min-width: 0; }
+    .user-name {
+      font-family: var(--font); font-weight: 800; font-size: .88rem;
+      color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .user-badge {
+      font-size: .7rem; color: var(--teal); font-family: var(--font); font-weight: 700;
+    }
+
+    .sidebar-nav {
+      padding: 14px 12px; flex: 1;
+    }
+    .nav-group { margin-bottom: 18px; }
+    .nav-group-label {
+      font-family: var(--font); font-size: .68rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--text-muted); padding: 0 10px; margin-bottom: 6px;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 10px;
+      font-family: var(--font); font-weight: 700; font-size: .88rem;
+      color: var(--text-soft); cursor: pointer;
+      transition: all var(--transition);
+      border: none; background: none; width: 100%; text-align: left;
+      text-decoration: none;
+    }
+    .nav-item i { width: 18px; text-align: center; font-size: .9rem; }
+    .nav-item:hover { background: var(--blue-ghost); color: var(--blue-deep); }
+    .nav-item.active {
+      background: var(--blue-pale); color: var(--blue-deep);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-item .badge {
+      margin-left: auto; background: var(--blue-mid);
+      color: #fff; border-radius: 30px; padding: 1px 8px;
+      font-size: .68rem; font-weight: 800;
+    }
+
+    .sidebar-footer {
+      padding: 14px 12px;
+      border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .a11y-row {
+      display: flex; gap: 4px; flex-wrap: wrap; padding: 4px 8px;
+    }
+    .a11y-btn {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 5px 9px;
+      font-family: var(--font); font-size: .72rem; font-weight: 700;
+      color: var(--text-muted); cursor: pointer;
+      display: flex; align-items: center; gap: 4px;
+      transition: all var(--transition);
+    }
+    .a11y-btn:hover { border-color: var(--blue-soft); color: var(--blue-mid); background: var(--blue-ghost); }
+    .a11y-btn.active { background: var(--warm-pale); color: var(--warm); border-color: var(--warm); }
+    .logout-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 12px; border-radius: 10px;
+      font-family: var(--font); font-weight: 700; font-size: .85rem;
+      color: #dc2626; cursor: pointer;
+      background: none; border: none; width: 100%;
+      transition: background var(--transition);
+    }
+    .logout-btn:hover { background: #fef2f2; }
+
+    /* ── MAIN CONTENT ───────────────── */
+    .main-wrap { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+    /* Top bar */
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 0 32px; height: 64px;
+      display: flex; align-items: center; gap: 14px;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+    .topbar-title {
+      font-family: var(--font); font-weight: 800; font-size: 1.1rem; color: var(--blue-deep);
+    }
+    .topbar-sub { font-size: .8rem; color: var(--text-muted); margin-left: 4px; }
+    .topbar-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+    .btn-new {
+      background: var(--blue-mid); color: #fff;
+      padding: 8px 18px; border-radius: 30px;
+      font-family: var(--font); font-weight: 700; font-size: .85rem;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 7px;
+      transition: all var(--transition);
+    }
+    .btn-new:hover { background: var(--blue-deep); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .burger-btn {
+      display: none; background: none; border: none;
+      color: var(--text); font-size: 1.3rem; cursor: pointer; padding: 6px;
+    }
+
+    /* Page body */
+    .page-body { padding: 32px; flex: 1; }
+
+    /* Stats row */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 20px 22px;
+      display: flex; align-items: flex-start; gap: 14px;
+      box-shadow: var(--shadow-sm); transition: all var(--transition);
+    }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .stat-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem; flex-shrink: 0;
+    }
+    .stat-icon.blue { background: var(--blue-pale); color: var(--blue-mid); }
+    .stat-icon.teal { background: #e8f7f5; color: var(--teal); }
+    .stat-icon.warm { background: var(--warm-pale); color: var(--warm); }
+    .stat-icon.purple { background: #f3e8ff; color: #7c3aed; }
+    .stat-val {
+      font-family: var(--font); font-weight: 900; font-size: 1.7rem;
+      color: var(--blue-deep); line-height: 1; margin-bottom: 4px;
+    }
+    .stat-label { font-size: .78rem; color: var(--text-muted); font-family: var(--font); font-weight: 600; }
+
+    /* Content grid */
+    .content-grid {
+      display: grid; grid-template-columns: 1fr 380px;
+      gap: 24px; align-items: start;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 20px 26px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-header h2 {
+      font-family: var(--font); font-weight: 800; font-size: 1.05rem; color: var(--blue-deep);
+    }
+    .card-header .card-badge {
+      margin-left: auto; background: var(--blue-ghost);
+      color: var(--blue-mid); border-radius: 30px;
+      padding: 2px 10px; font-family: var(--font); font-size: .72rem; font-weight: 800;
+    }
+    .card-body { padding: 26px; }
+
+    /* ── FORM TABS ── */
+    .form-tabs {
+      display: flex; gap: 0;
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 4px; margin-bottom: 24px;
+    }
+    .form-tab {
+      flex: 1; padding: 9px 14px;
+      background: none; border: none; border-radius: 9px;
+      font-family: var(--font); font-weight: 700; font-size: .85rem;
+      color: var(--text-muted); cursor: pointer;
+      transition: all var(--transition);
+    }
+    .form-tab.active {
+      background: var(--surface); color: var(--blue-deep);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-panel { display: none; }
+    .form-panel.active { display: block; animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Fields */
+    .diary-field { margin-bottom: 18px; }
+    .diary-field label {
+      display: block; font-family: var(--font); font-weight: 700;
+      font-size: .82rem; color: var(--text); margin-bottom: 7px;
+    }
+    .diary-field input[type="date"],
+    .diary-field input[type="number"],
+    .diary-field select,
+    .diary-field textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      background: var(--bg); color: var(--text);
+      font-family: var(--font-body); font-size: .92rem;
+      outline: none; resize: vertical;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .diary-field input:focus, .diary-field select:focus, .diary-field textarea:focus {
+      border-color: var(--blue-mid);
+      box-shadow: 0 0 0 3px rgba(45,111,160,.1);
+    }
+
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* Emoji picker */
+    .emoji-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .emoji-btn {
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 10px 14px; cursor: pointer;
+      font-size: 1.25rem; display: flex; flex-direction: column;
+      align-items: center; gap: 4px;
+      transition: all var(--transition);
+    }
+    .emoji-btn span { font-size: .68rem; font-family: var(--font); font-weight: 700; color: var(--text-muted); }
+    .emoji-btn.selected { border-color: var(--blue-mid); background: var(--blue-pale); }
+    .emoji-btn:hover { transform: scale(1.05); border-color: var(--blue-soft); }
+
+    /* Range */
+    .range-wrap { display: flex; align-items: center; gap: 12px; }
+    .range-wrap input[type="range"] {
+      flex: 1; appearance: none; height: 6px;
+      background: var(--blue-pale); border-radius: 3px; outline: none; border: none; padding: 0;
+    }
+    .range-wrap input[type="range"]::-webkit-slider-thumb {
+      appearance: none; width: 18px; height: 18px;
+      background: var(--blue-mid); border-radius: 50%; cursor: pointer;
+    }
+    .range-val { font-family: var(--font); font-weight: 800; color: var(--blue-deep); min-width: 26px; text-align: center; }
+
+    /* Save button */
+    .btn-save {
+      background: var(--blue-mid); color: #fff; border: none;
+      border-radius: 30px; padding: 13px 30px;
+      font-family: var(--font); font-weight: 800; font-size: .95rem;
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
+      transition: all var(--transition); position: relative;
+    }
+    .btn-save:hover { background: var(--blue-deep); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .btn-save:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .btn-save .spinner {
+      display: none; width: 16px; height: 16px;
+      border: 2.5px solid rgba(255,255,255,.4);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    .btn-save.loading .btn-text { display: none; }
+    .btn-save.loading .spinner { display: block; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+
+    .save-feedback {
+      display: none; margin-top: 14px; padding: 12px 16px;
+      border-radius: var(--radius); font-family: var(--font);
+      font-weight: 700; font-size: .88rem;
+      align-items: center; gap: 8px;
+    }
+    .save-feedback.show { display: flex; animation: fadeIn .25s ease; }
+    .save-feedback.ok { background: #d1fae5; color: #065f46; }
+    .save-feedback.err { background: #fef2f2; color: #991b1b; }
+
+    /* ── HISTORY SIDEBAR ── */
+    .history-card { position: sticky; top: 88px; }
+
+    /* Filter */
+    .filter-row {
+      display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 5px 14px; border-radius: 30px;
+      border: 1.5px solid var(--border); background: var(--bg);
+      font-family: var(--font); font-weight: 700; font-size: .78rem;
+      color: var(--text-muted); cursor: pointer;
+      transition: all var(--transition);
+    }
+    .filter-btn.active { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); }
+
+    /* Entry list */
+    .entry-list { display: flex; flex-direction: column; gap: 10px; max-height: 520px; overflow-y: auto; }
+    .entry-item {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 16px;
+      cursor: pointer; transition: all var(--transition);
+    }
+    .entry-item:hover { border-color: var(--blue-soft); box-shadow: var(--shadow-sm); background: var(--blue-ghost); }
+    .entry-top {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .entry-date {
+      font-family: var(--font); font-weight: 800; font-size: .82rem; color: var(--blue-deep);
+    }
+    .entry-tipo {
+      font-family: var(--font); font-size: .68rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .06em;
+      padding: 2px 8px; border-radius: 6px;
+    }
+    .tipo-crianca { background: #fce7f3; color: #831843; }
+    .tipo-adulto { background: var(--blue-pale); color: var(--blue-deep); }
+    .entry-summary { font-size: .82rem; color: var(--text-soft); line-height: 1.5; }
+
+    .empty-state {
+      text-align: center; padding: 32px 20px;
+      color: var(--text-muted); font-family: var(--font);
+    }
+    .empty-state i { font-size: 2.5rem; display: block; margin-bottom: 12px; color: var(--border); }
+    .empty-state p { font-size: .88rem; line-height: 1.6; }
+
+    /* Loading skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 8px; height: 14px; margin-bottom: 8px;
+    }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    /* Modal overlay */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.45); z-index: 300;
+      align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; animation: fadeIn .2s ease; }
+    .modal {
+      background: var(--surface); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+      width: 100%; max-width: 540px; max-height: 80vh; overflow-y: auto;
+    }
+    .modal-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-header h3 { font-family: var(--font); font-weight: 800; font-size: 1rem; color: var(--blue-deep); }
+    .modal-close {
+      background: none; border: none; color: var(--text-muted);
+      cursor: pointer; font-size: 1.1rem; padding: 4px;
+      transition: color var(--transition);
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-body { padding: 24px; }
+    .modal-field { margin-bottom: 14px; }
+    .modal-field label { display: block; font-family: var(--font); font-weight: 700; font-size: .8rem; color: var(--text-muted); margin-bottom: 4px; }
+    .modal-field p { font-size: .9rem; color: var(--text); line-height: 1.6; }
+    .modal-del-btn {
+      background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;
+      border-radius: 10px; padding: 9px 18px;
+      font-family: var(--font); font-weight: 700; font-size: .82rem;
+      cursor: pointer; display: flex; align-items: center; gap: 6px;
+      margin-top: 20px; transition: all var(--transition);
+    }
+    .modal-del-btn:hover { background: #dc2626; color: #fff; }
+
+    /* Alert */
+    .alert {
+      border-radius: var(--radius); padding: 12px 16px;
+      font-family: var(--font); font-size: .85rem; font-weight: 700;
+      display: none; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .alert.show { display: flex; animation: fadeIn .25s ease; }
+    .alert-warn { background: var(--warm-pale); border: 1.5px solid var(--warm); color: #7a4a1a; }
+    .alert-info { background: var(--blue-ghost); border: 1.5px solid var(--blue-pale); color: var(--blue-deep); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .content-grid { grid-template-columns: 1fr; }
+      .history-card { position: static; }
+    }
+    @media (max-width: 780px) {
+      .sidebar { position: fixed; left: 0; top: 0; z-index: 200; transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+      .burger-btn { display: flex; }
+      .page-body { padding: 20px 16px; }
+      .topbar { padding: 0 16px; }
+      .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .field-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr; }
+    }
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.4); z-index: 190;
+    }
+    .sidebar-overlay.open { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- ── SIDEBAR ─────────────────────────────────────────── -->
+<aside class="sidebar" id="sidebar" aria-label="Menu lateral">
+  <div class="sidebar-brand">
+    <div class="logo-icon"><i class="fa-solid fa-infinity"></i></div>
+    <div class="logo-text">Laço Azul <span>Projeto Autismo</span></div>
+  </div>
+
+  <div class="sidebar-user">
+    <div class="user-avatar" id="sidebarAvatar">?</div>
+    <div class="user-info">
+      <div class="user-name" id="sidebarUsername">Carregando…</div>
+      <div class="user-badge"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Conectado</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav" aria-label="Navegação do app">
+    <div class="nav-group">
+      <div class="nav-group-label">Principal</div>
+      <button class="nav-item active" onclick="showView('diario')">
+        <i class="fa-solid fa-book-open"></i> Meu Diário
+      </button>
+      <a class="nav-item" href="atualizado por ultimo.html">
+        <i class="fa-solid fa-house"></i> Início
+      </a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Acessibilidade</div>
+      <div class="a11y-row">
+        <button class="a11y-btn" onclick="toggleDark()" id="btnDark"><i class="fa-solid fa-moon"></i></button>
+        <button class="a11y-btn" onclick="toggleContrast()" id="btnContrast"><i class="fa-solid fa-circle-half-stroke"></i></button>
+        <button class="a11y-btn" onclick="changeFont(1)" title="Aumentar texto"><i class="fa-solid fa-plus"></i> A</button>
+        <button class="a11y-btn" onclick="changeFont(-1)" title="Diminuir texto"><i class="fa-solid fa-minus"></i> A</button>
+        <button class="a11y-btn" onclick="toggleCalm()" id="btnCalm" title="Modo calmo"><i class="fa-solid fa-leaf"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Sair da conta
+    </button>
+  </div>
+</aside>
+
+<!-- ── MAIN WRAP ─────────────────────────────────────────── -->
+<div class="main-wrap">
+
+  <!-- Topbar -->
+  <div class="topbar" role="banner">
+    <button class="burger-btn" onclick="openSidebar()" aria-label="Abrir menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div>
+      <span class="topbar-title">Meu Diário</span>
+      <span class="topbar-sub" id="topbarDate"></span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-new" onclick="scrollToForm()">
+        <i class="fa-solid fa-plus"></i> Novo registro
+      </button>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <main class="page-body" id="main" aria-label="Conteúdo principal">
+
+    <!-- Auth warning -->
+    <div class="alert alert-warn" id="authWarn">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      Você não está autenticado. <a href="login.html" style="color:var(--warm);font-weight:800;">Faça login</a> para salvar registros na nuvem.
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="fa-solid fa-calendar-check"></i></div>
+        <div>
+          <div class="stat-val" id="statTotal">–</div>
+          <div class="stat-label">Registros totais</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon teal"><i class="fa-solid fa-child"></i></div>
+        <div>
+          <div class="stat-val" id="statCrianca">–</div>
+          <div class="stat-label">Registros criança</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon warm"><i class="fa-solid fa-person"></i></div>
+        <div>
+          <div class="stat-val" id="statAdulto">–</div>
+          <div class="stat-label">Registros adulto</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon purple"><i class="fa-solid fa-fire-flame-curved"></i></div>
+        <div>
+          <div class="stat-val" id="statStreak">–</div>
+          <div class="stat-label">Dias seguidos</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content grid -->
+    <div class="content-grid">
+
+      <!-- FORM CARD -->
+      <div class="card" id="formCard">
+        <div class="card-header">
+          <i class="fa-solid fa-pencil" style="color:var(--blue-mid)"></i>
+          <h2>Novo registro</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-tabs" role="tablist">
+            <button class="form-tab active" role="tab" onclick="switchFormTab('crianca', this)" id="tabCrianca">
+              👦 Para crianças
+            </button>
+            <button class="form-tab" role="tab" onclick="switchFormTab('adulto', this)" id="tabAdulto">
+              🙋 Para adultos
+            </button>
+          </div>
+
+          <!-- ── CRIANÇA ── -->
+          <div class="form-panel active" id="panel-crianca">
+            <div class="field-row">
+              <div class="diary-field">
+                <label for="c-data">📅 Data</label>
+                <input type="date" id="c-data" />
+              </div>
+              <div class="diary-field">
+                <label for="c-sono">🌙 Horas de sono</label>
+                <input type="number" id="c-sono" min="0" max="24" placeholder="Ex: 8" />
+              </div>
+            </div>
+            <div class="diary-field">
+              <label>😊 Humor do dia</label>
+              <div class="emoji-row" role="group">
+                <button class="emoji-btn" onclick="selectEmoji(this,'c-humor')" data-val="muito-calmo">😌<span>Muito calmo</span></button>
+                <button class="emoji-btn" onclick="selectEmoji(this,'c-humor')" data-val="calmo">🙂<span>Calmo</span></button>
+                <button class="emoji-btn" onclick="selectEmoji(this,'c-humor')" data-val="agitado">😤<span>Agitado</span></button>
+                <button class="emoji-btn" onclick="selectEmoji(this,'c-humor')" data-val="crise">😰<span>Crise</span></button>
+              </div>
+            </div>
+            <div class="diary-field">
+              <label>🗣️ Comunicação hoje</label>
+              <div class="emoji-row" role="group">
+                <button class="emoji-btn" onclick="selectEmoji(this,'c-comun')" data-val="palavras">💬<span>Palavras novas</span></button>
+                <button class="emoji-btn" onclick="selectEmoji(this,'c-comun')" data-val="gestos">🤟<span>Gestos</span></button>
+                <button class="emoji-btn" onclick="selectEmoji(this,'c-comun')" data-val="interagiu">👋<span>Interagiu</span></button>
+                <button class="emoji-btn" onclick="selectEmoji(this,'c-comun')" data-val="pouco">🤐<span>Pouco</span></button>
+              </div>
+            </div>
+            <div class="diary-field">
+              <label for="c-comport">🔁 Comportamentos repetitivos</label>
+              <select id="c-comport">
+                <option value="">Selecione…</option>
+                <option value="baixo">Baixa frequência</option>
+                <option value="medio">Frequência média</option>
+                <option value="alto">Alta frequência</option>
+              </select>
+            </div>
+            <div class="diary-field">
+              <label for="c-crise">⚠️ Teve crise? Descreva</label>
+              <textarea id="c-crise" rows="2" placeholder="Ex: 10 min após mudança de atividade…"></textarea>
+            </div>
+            <div class="diary-field">
+              <label for="c-obs">📝 Observações livres</label>
+              <textarea id="c-obs" rows="3" placeholder="Algo que queira registrar…"></textarea>
+            </div>
+            <button class="btn-save" id="btnSaveCrianca" onclick="saveEntry('crianca')">
+              <span class="btn-text"><i class="fa-solid fa-floppy-disk"></i> Salvar registro</span>
+              <div class="spinner"></div>
+            </button>
+            <div class="save-feedback" id="fb-crianca"></div>
+          </div>
+
+          <!-- ── ADULTO ── -->
+          <div class="form-panel" id="panel-adulto">
+            <div class="field-row">
+              <div class="diary-field">
+                <label for="a-data">📅 Data</label>
+                <input type="date" id="a-data" />
+              </div>
+            </div>
+            <div class="diary-field">
+              <label for="a-social">🧍 Energia social (0 = esgotado / 10 = pleno)</label>
+              <div class="range-wrap">
+                <input type="range" id="a-social" min="0" max="10" value="5" oninput="document.getElementById('a-social-v').textContent=this.value" />
+                <span class="range-val" id="a-social-v">5</span>
+              </div>
+            </div>
+            <div class="diary-field">
+              <label for="a-sens">🎧 Sensibilidade sensorial (0 = baixa / 10 = intensa)</label>
+              <div class="range-wrap">
+                <input type="range" id="a-sens" min="0" max="10" value="5" oninput="document.getElementById('a-sens-v').textContent=this.value" />
+                <span class="range-val" id="a-sens-v">5</span>
+              </div>
+            </div>
+            <div class="diary-field">
+              <label for="a-foco">🎯 Foco e produtividade (0 = zero / 10 = excelente)</label>
+              <div class="range-wrap">
+                <input type="range" id="a-foco" min="0" max="10" value="5" oninput="document.getElementById('a-foco-v').textContent=this.value" />
+                <span class="range-val" id="a-foco-v">5</span>
+              </div>
+            </div>
+            <div class="diary-field">
+              <label for="a-stress">😮 Situação que gerou estresse (opcional)</label>
+              <textarea id="a-stress" rows="2" placeholder="Ex: reunião barulhenta, mudança de planos…"></textarea>
+            </div>
+            <div class="diary-field">
+              <label for="a-estrategia">✅ Estratégia usada para se regular</label>
+              <textarea id="a-estrategia" rows="2" placeholder="Ex: saí por 10 min, usei fone de ouvido…"></textarea>
+            </div>
+            <div class="diary-field">
+              <label for="a-obs">📝 Observações</label>
+              <textarea id="a-obs" rows="2" placeholder="Qualquer anotação importante…"></textarea>
+            </div>
+            <button class="btn-save" id="btnSaveAdulto" onclick="saveEntry('adulto')">
+              <span class="btn-text"><i class="fa-solid fa-floppy-disk"></i> Salvar registro</span>
+              <div class="spinner"></div>
+            </button>
+            <div class="save-feedback" id="fb-adulto"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORY CARD -->
+      <div class="card history-card">
+        <div class="card-header">
+          <i class="fa-solid fa-clock-rotate-left" style="color:var(--teal)"></i>
+          <h2>Histórico</h2>
+          <span class="card-badge" id="histCount">0</span>
+        </div>
+        <div class="card-body">
+          <div class="filter-row">
+            <button class="filter-btn active" onclick="filterEntries('all', this)">Todos</button>
+            <button class="filter-btn" onclick="filterEntries('crianca', this)">👦 Criança</button>
+            <button class="filter-btn" onclick="filterEntries('adulto', this)">🙋 Adulto</button>
+          </div>
+          <div class="entry-list" id="entryList" aria-live="polite">
+            <div style="padding:8px 0">
+              <div class="skeleton" style="width:60%;height:12px"></div>
+              <div class="skeleton" style="width:85%;height:12px"></div>
+              <div class="skeleton" style="width:70%;height:12px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content-grid -->
+  </main>
+</div><!-- /main-wrap -->
+
+<!-- ENTRY DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Detalhes do registro</h3>
+      <button class="modal-close" onclick="closeModal()" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+const API = 'http://localhost:8000';
+let allEntries = [];
+let currentFilter = 'all';
+
+// ── TOKEN ────────────────────────────────────────────────────────────────────
+function getToken() {
+  return localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+}
+function authHeaders() {
+  const t = getToken();
+  return t ? { 'Authorization': `Bearer ${t}`, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' };
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  // Set today's date on inputs
+  const today = new Date().toISOString().split('T')[0];
+  ['c-data','a-data'].forEach(id => { const el=document.getElementById(id); if(el) el.value=today; });
+
+  // Topbar date
+  const d = new Date();
+  document.getElementById('topbarDate').textContent =
+    d.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
+
+  // Restore a11y prefs
+  if(localStorage.getItem('theme')==='dark') applyDark();
+  const fs = parseFloat(localStorage.getItem('fontScale') || '1');
+  fontScale = fs; document.documentElement.style.setProperty('--font-scale', fontScale);
+
+  // Auth check
+  const token = getToken();
+  if(!token) {
+    document.getElementById('authWarn').classList.add('show');
+    loadSidebarUser(null);
+    renderEmptyHistory();
+    setStats(0,0,0,0);
+    return;
+  }
+
+  // Load user info
+  loadSidebarUser(token);
+  // Load entries
+  await loadEntries();
+});
+
+// ── USER INFO ────────────────────────────────────────────────────────────────
+async function loadSidebarUser(token) {
+  if(!token) {
+    document.getElementById('sidebarUsername').textContent = 'Visitante';
+    document.getElementById('sidebarAvatar').textContent = '?';
+    return;
+  }
+  // Decode JWT payload to get username (no lib needed — just base64)
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    const name = payload.sub || payload.username || 'Usuário';
+    document.getElementById('sidebarUsername').textContent = name;
+    document.getElementById('sidebarAvatar').textContent = name[0].toUpperCase();
+  } catch {
+    document.getElementById('sidebarUsername').textContent = 'Usuário';
+    document.getElementById('sidebarAvatar').textContent = 'U';
+  }
+}
+
+// ── LOAD ENTRIES ─────────────────────────────────────────────────────────────
+async function loadEntries() {
+  try {
+    const res = await fetch(`${API}/diario/`, { headers: authHeaders() });
+    if(res.status === 401) {
+      document.getElementById('authWarn').classList.add('show');
+      renderEmptyHistory(); setStats(0,0,0,0); return;
+    }
+    const data = await res.json();
+    allEntries = data.entries || [];
+    renderHistory();
+    computeStats();
+  } catch(e) {
+    document.getElementById('entryList').innerHTML =
+      `<div class="empty-state"><i class="fa-solid fa-wifi-slash"></i><p>Não foi possível conectar ao servidor.</p></div>`;
+    setStats(0,0,0,0);
+  }
+}
+
+// ── RENDER HISTORY ───────────────────────────────────────────────────────────
+function renderHistory() {
+  const filtered = currentFilter === 'all'
+    ? allEntries
+    : allEntries.filter(e => e.tipo === currentFilter);
+
+  document.getElementById('histCount').textContent = filtered.length;
+
+  if(!filtered.length) { renderEmptyHistory(); return; }
+
+  document.getElementById('entryList').innerHTML = filtered.map(e => {
+    const parsed = safeJson(e.conteudo);
+    const summary = buildSummary(e.tipo, parsed);
+    const dateStr = formatDate(e.data);
+    return `<div class="entry-item" onclick="openModal(${e.id})" role="button" tabindex="0"
+      onkeypress="if(event.key==='Enter')openModal(${e.id})">
+      <div class="entry-top">
+        <span class="entry-date">${dateStr}</span>
+        <span class="entry-tipo ${e.tipo === 'crianca' ? 'tipo-crianca' : 'tipo-adulto'}">
+          ${e.tipo === 'crianca' ? '👦 Criança' : '🙋 Adulto'}
+        </span>
+      </div>
+      <div class="entry-summary">${summary}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderEmptyHistory() {
+  document.getElementById('entryList').innerHTML =
+    `<div class="empty-state">
+      <i class="fa-solid fa-book-open"></i>
+      <p>Nenhum registro ainda.<br>Faça seu primeiro registro ao lado!</p>
+    </div>`;
+  document.getElementById('histCount').textContent = '0';
+}
+
+function buildSummary(tipo, data) {
+  if(!data) return 'Registro salvo.';
+  if(tipo === 'crianca') {
+    const parts = [];
+    if(data.humor) parts.push({ 'muito-calmo':'😌 Muito calmo','calmo':'🙂 Calmo','agitado':'😤 Agitado','crise':'😰 Crise' }[data.humor] || data.humor);
+    if(data.sono) parts.push(`🌙 ${data.sono}h sono`);
+    if(data.comun) parts.push({ 'palavras':'💬 Palavras','gestos':'🤟 Gestos','interagiu':'👋 Interagiu','pouco':'🤐 Pouco' }[data.comun] || data.comun);
+    return parts.join(' · ') || 'Registro salvo.';
+  } else {
+    const parts = [];
+    if(data.social !== undefined) parts.push(`🧍 Energia: ${data.social}/10`);
+    if(data.foco !== undefined) parts.push(`🎯 Foco: ${data.foco}/10`);
+    if(data.sens !== undefined) parts.push(`🎧 Sens: ${data.sens}/10`);
+    return parts.join(' · ') || 'Registro salvo.';
+  }
+}
+
+function formatDate(iso) {
+  if(!iso) return '—';
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function safeJson(str) {
+  try { return JSON.parse(str); } catch { return null; }
+}
+
+// ── STATS ────────────────────────────────────────────────────────────────────
+function computeStats() {
+  const total = allEntries.length;
+  const crianca = allEntries.filter(e => e.tipo === 'crianca').length;
+  const adulto  = allEntries.filter(e => e.tipo === 'adulto').length;
+  // streak: consecutive days with entries up to today
+  const dates = [...new Set(allEntries.map(e => e.data))].sort().reverse();
+  let streak = 0;
+  let cur = new Date(); cur.setHours(0,0,0,0);
+  for(const d of dates) {
+    const ed = new Date(d + 'T00:00:00');
+    const diff = Math.round((cur - ed) / 86400000);
+    if(diff <= 1) { streak++; cur = ed; } else break;
+  }
+  setStats(total, crianca, adulto, streak);
+}
+function setStats(total, crianca, adulto, streak) {
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statCrianca').textContent = crianca;
+  document.getElementById('statAdulto').textContent = adulto;
+  document.getElementById('statStreak').textContent = streak + (streak === 1 ? ' dia' : ' dias');
+}
+
+// ── FILTER ───────────────────────────────────────────────────────────────────
+function filterEntries(type, btn) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderHistory();
+}
+
+// ── FORM TABS ────────────────────────────────────────────────────────────────
+function switchFormTab(tipo, btn) {
+  document.querySelectorAll('.form-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + tipo).classList.add('active');
+}
+
+function selectEmoji(btn, group) {
+  btn.closest('.emoji-row').querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+// ── SAVE ─────────────────────────────────────────────────────────────────────
+async function saveEntry(tipo) {
+  const token = getToken();
+  const btnId = tipo === 'crianca' ? 'btnSaveCrianca' : 'btnSaveAdulto';
+  const fbId  = 'fb-' + tipo;
+  const btn   = document.getElementById(btnId);
+
+  hideFeedback(fbId);
+
+  let conteudo = {};
+  let data = '';
+
+  if(tipo === 'crianca') {
+    data = document.getElementById('c-data').value;
+    const humor = document.querySelector('#panel-crianca .emoji-btn[data-group="c-humor"].selected')?.dataset.val
+      || document.querySelector('#panel-crianca .emoji-row:first-of-type .emoji-btn.selected')?.dataset.val || '';
+    const comun = document.querySelector('#panel-crianca .emoji-row:nth-of-type(2) .emoji-btn.selected')?.dataset.val || '';
+    conteudo = {
+      humor, comun,
+      sono:     document.getElementById('c-sono').value,
+      comport:  document.getElementById('c-comport').value,
+      crise:    document.getElementById('c-crise').value,
+      obs:      document.getElementById('c-obs').value,
+    };
+  } else {
+    data = document.getElementById('a-data').value;
+    conteudo = {
+      social:     document.getElementById('a-social').value,
+      sens:       document.getElementById('a-sens').value,
+      foco:       document.getElementById('a-foco').value,
+      stress:     document.getElementById('a-stress').value,
+      estrategia: document.getElementById('a-estrategia').value,
+      obs:        document.getElementById('a-obs').value,
+    };
+  }
+
+  if(!data) { showFeedback(fbId, 'Por favor, informe a data do registro.', false); return; }
+  if(!token) { showFeedback(fbId, 'Faça login para salvar registros na nuvem.', false); return; }
+
+  btn.disabled = true; btn.classList.add('loading');
+
+  try {
+    const res = await fetch(`${API}/diario/`, {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ tipo, data, conteudo: JSON.stringify(conteudo) }),
+    });
+
+    if(!res.ok) {
+      const err = await res.json().catch(()=>({}));
+      showFeedback(fbId, err.detail || 'Erro ao salvar. Tente novamente.', false);
+      return;
+    }
+
+    const entry = await res.json();
+    allEntries.unshift(entry);
+    renderHistory(); computeStats();
+    showFeedback(fbId, 'Registro salvo com sucesso! ✅', true);
+    clearForm(tipo);
+
+  } catch(e) {
+    showFeedback(fbId, 'Sem conexão com o servidor.', false);
+  } finally {
+    btn.disabled = false; btn.classList.remove('loading');
+  }
+}
+
+function clearForm(tipo) {
+  const today = new Date().toISOString().split('T')[0];
+  if(tipo === 'crianca') {
+    document.getElementById('c-data').value = today;
+    document.getElementById('c-sono').value = '';
+    document.getElementById('c-comport').value = '';
+    document.getElementById('c-crise').value = '';
+    document.getElementById('c-obs').value = '';
+    document.querySelectorAll('#panel-crianca .emoji-btn').forEach(b => b.classList.remove('selected'));
+  } else {
+    document.getElementById('a-data').value = today;
+    document.getElementById('a-stress').value = '';
+    document.getElementById('a-estrategia').value = '';
+    document.getElementById('a-obs').value = '';
+    ['a-social','a-sens','a-foco'].forEach(id => {
+      document.getElementById(id).value = 5;
+      const vId = id + '-v';
+      if(document.getElementById(vId)) document.getElementById(vId).textContent = '5';
+    });
+  }
+}
+
+function showFeedback(id, msg, ok) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = `save-feedback show ${ok ? 'ok' : 'err'}`;
+  if(ok) setTimeout(()=>el.classList.remove('show'), 3500);
+}
+function hideFeedback(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+// ── MODAL ────────────────────────────────────────────────────────────────────
+function openModal(entryId) {
+  const entry = allEntries.find(e => e.id === entryId);
+  if(!entry) return;
+  const parsed = safeJson(entry.conteudo);
+  const tipo = entry.tipo;
+
+  let html = `
+    <div class="modal-field"><label>📅 Data</label><p>${formatDate(entry.data)}</p></div>
+    <div class="modal-field"><label>🗂️ Tipo</label><p>${tipo === 'crianca' ? '👦 Criança' : '🙋 Adulto'}</p></div>`;
+
+  if(parsed) {
+    if(tipo === 'crianca') {
+      const items = [
+        ['😊 Humor', {'muito-calmo':'😌 Muito calmo','calmo':'🙂 Calmo','agitado':'😤 Agitado','crise':'😰 Crise'}[parsed.humor] || parsed.humor],
+        ['🗣️ Comunicação', {'palavras':'💬 Palavras novas','gestos':'🤟 Gestos','interagiu':'👋 Interagiu','pouco':'🤐 Pouco'}[parsed.comun] || parsed.comun],
+        ['🌙 Sono', parsed.sono ? parsed.sono + 'h' : null],
+        ['🔁 Comportamentos', {'baixo':'Baixa frequência','medio':'Frequência média','alto':'Alta frequência'}[parsed.comport] || parsed.comport],
+        ['⚠️ Crise', parsed.crise],
+        ['📝 Observações', parsed.obs],
+      ];
+      items.filter(([,v])=>v).forEach(([l,v]) => {
+        html += `<div class="modal-field"><label>${l}</label><p>${v}</p></div>`;
+      });
+    } else {
+      const items = [
+        ['🧍 Energia social', parsed.social !== undefined ? parsed.social + '/10' : null],
+        ['🎧 Sensibilidade', parsed.sens !== undefined ? parsed.sens + '/10' : null],
+        ['🎯 Foco', parsed.foco !== undefined ? parsed.foco + '/10' : null],
+        ['😮 Estresse', parsed.stress],
+        ['✅ Estratégia', parsed.estrategia],
+        ['📝 Observações', parsed.obs],
+      ];
+      items.filter(([,v])=>v).forEach(([l,v]) => {
+        html += `<div class="modal-field"><label>${l}</label><p>${v}</p></div>`;
+      });
+    }
+  }
+
+  html += `<button class="modal-del-btn" onclick="deleteEntry(${entry.id})">
+    <i class="fa-solid fa-trash-can"></i> Excluir registro
+  </button>`;
+
+  document.getElementById('modalBody').innerHTML = html;
+  document.getElementById('detailModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('detailModal').classList.remove('open');
+}
+document.getElementById('detailModal').addEventListener('click', function(e) {
+  if(e.target === this) closeModal();
+});
+
+async function deleteEntry(id) {
+  if(!confirm('Tem certeza que deseja excluir este registro? Esta ação não pode ser desfeita.')) return;
+  try {
+    const res = await fetch(`${API}/diario/${id}`, { method:'DELETE', headers: authHeaders() });
+    if(res.ok || res.status === 404) {
+      allEntries = allEntries.filter(e => e.id !== id);
+      renderHistory(); computeStats();
+      closeModal();
+    }
+  } catch(e) { alert('Não foi possível excluir.'); }
+}
+
+// ── SIDEBAR MOBILE ───────────────────────────────────────────────────────────
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+function scrollToForm() {
+  document.getElementById('formCard').scrollIntoView({ behavior:'smooth' });
+  closeSidebar();
+}
+
+// ── LOGOUT ───────────────────────────────────────────────────────────────────
+function logout() {
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('token_type');
+  sessionStorage.removeItem('access_token');
+  sessionStorage.removeItem('token_type');
+  window.location.href = 'login.html';
+}
+
+// ── ACCESSIBILITY ─────────────────────────────────────────────────────────────
+let fontScale = 1;
+function applyDark() {
+  document.documentElement.dataset.theme = 'dark';
+  document.getElementById('btnDark').classList.add('active');
+}
+function toggleDark() {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? '' : 'dark';
+  document.getElementById('btnDark').classList.toggle('active', !isDark);
+  localStorage.setItem('theme', isDark ? '' : 'dark');
+}
+function toggleContrast() {
+  const isH = document.documentElement.dataset.contrast === 'high';
+  document.documentElement.dataset.contrast = isH ? '' : 'high';
+  document.getElementById('btnContrast').classList.toggle('active', !isH);
+}
+function changeFont(dir) {
+  fontScale = Math.max(0.85, Math.min(1.4, fontScale + dir * 0.1));
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+  localStorage.setItem('fontScale', fontScale);
+}
+function toggleCalm() {
+  const c = !document.getElementById('btnCalm').classList.contains('active');
+  document.getElementById('btnCalm').classList.toggle('active', c);
+  let s = document.getElementById('calmStyle') || document.createElement('style');
+  s.id = 'calmStyle';
+  s.textContent = c ? '*, *::before, *::after { animation:none!important; transition:none!important; }' : '';
+  document.head.appendChild(s);
+}
+</script>
+</body>
+</html>
