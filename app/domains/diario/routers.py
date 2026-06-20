@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from sqlalchemy import select
 from app.dependencies import CurrentUser, Session
 from app.domains.diario.models import DiarioEntry
@@ -30,3 +30,24 @@ async def list_entries(session: Session, current_user: CurrentUser):
         .order_by(DiarioEntry.data.desc())
     )
     return {'entries': result.all()}
+
+
+@router.delete('/{entry_id}', status_code=HTTPStatus.OK)
+async def delete_entry(entry_id: int, session: Session, current_user: CurrentUser):
+    entry = await session.scalar(
+        select(DiarioEntry).where(
+            DiarioEntry.id == entry_id,
+            DiarioEntry.user_id == current_user.id,
+        )
+    )
+
+    if not entry:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND,
+            detail='Registro do diário não encontrado',
+        )
+
+    await session.delete(entry)
+    await session.commit()
+
+    return {'message': 'Registro excluído com sucesso'}

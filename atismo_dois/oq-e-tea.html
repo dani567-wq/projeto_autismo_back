@@ -1,45 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>O que é o TEA? | Laço Azul</title>
+    <link rel="stylesheet" href="inicio.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 <body>
-    <style>
-        
-    .section {
-      max-width: 1100px; margin: 0 auto;
-      padding: 70px 32px;
-    }
-    .section-label {
-      display: inline-flex; align-items: center; gap: 8px;
-      color: var(--blue-mid); font-family: var(--font);
-      font-size: .72rem; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .section-label::before {
-      content: ''; width: 20px; height: 2px;
-      background: var(--blue-mid); border-radius: 2px;
-    }
-    .section-title {
-      font-family: var(--font); font-weight: 800;
-      font-size: clamp(1.6rem,2.5vw,2.2rem);
-      color: var(--blue-deep); margin-bottom: 14px;
-    }
-    .section-sub {
-      color: var(--text-soft); font-size: 1rem;
-      max-width: 560px; line-height: 1.75; margin-bottom: 44px;
-    }
-    .divider {
-      border: none; border-top: 1px solid var(--border);
-      margin: 0;
-    }
-    .bg-soft { background: var(--blue-ghost); }
-    .bg-teal { background: linear-gradient(135deg, #e8f7f5 0%, var(--blue-ghost) 100%); }
-    </style>
-    
+
+<!-- Skip link for accessibility -->
+<a href="#main" class="skip-link">Ir para o conteúdo principal</a>
+
+<!-- ACCESSIBILITY BAR -->
+<div class="a11y-bar" role="toolbar" aria-label="Ferramentas de acessibilidade">
+  <span>Acessibilidade:</span>
+  <button class="a11y-btn" id="btnDark" onclick="toggleDark()" aria-label="Alternar modo escuro">
+    <i class="fa-solid fa-moon"></i> Modo escuro
+  </button>
+  <button class="a11y-btn" id="btnContrast" onclick="toggleContrast()" aria-label="Alto contraste">
+    <i class="fa-solid fa-circle-half-stroke"></i> Alto contraste
+  </button>
+  <button class="a11y-btn" onclick="changeFont(1)" aria-label="Aumentar fonte">
+    <i class="fa-solid fa-plus"></i> Texto
+  </button>
+  <button class="a11y-btn" onclick="changeFont(-1)" aria-label="Diminuir fonte">
+    <i class="fa-solid fa-minus"></i> Texto
+  </button>
+  <button class="a11y-btn" id="btnCalm" onclick="toggleCalm()" aria-label="Modo calmo - menos estímulos visuais">
+    <i class="fa-solid fa-leaf"></i> Modo calmo
+  </button>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Laço Azul - Página inicial">
+      <div class="logo-icon" aria-hidden="true"><i class="fa-solid fa-infinity"></i></div>
+      laço azul
+    </a>
+    <nav aria-label="Navegação principal">
+      <a href="oq-e-tea.html" class="active">O que é TEA</a>
+      <a href="index.html#sinais">Sinais</a>
+      <a href="index.html#direitos">Direitos</a>
+      <a href="index.html#educadores">Educadores</a>
+      <a href="index.html#adultos">Adultos</a>
+      <a href="index.html#ajuda">Onde buscar ajuda</a>
+      <a href="index.html#contato">Contato</a>
+      <a href="diario.html" class="nav-cta">Meu Diário</a>
+    </nav>
+    <button class="burger" onclick="toggleMobileNav()" aria-label="Abrir menu" aria-expanded="false" id="burgerBtn">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Menu mobile">
+    <a href="oq-e-tea.html">O que é TEA</a>
+    <a href="index.html#sinais">Sinais</a>
+    <a href="index.html#direitos">Direitos</a>
+    <a href="index.html#educadores">Educadores</a>
+    <a href="index.html#adultos">Adultos</a>
+    <a href="index.html#ajuda">Onde buscar ajuda</a>
+    <a href="index.html#contato">Fale com especialista</a>
+    <a href="diario.html">Meu Diário</a>
+    <a href="login.html">Entrar / Cadastrar</a>
+  </nav>
+</header>
+
+<main id="main">
   <!-- ── O QUE É TEA ── -->
   <section id="oquee" class="section" aria-labelledby="oquee-title">
     <div class="section-label">Entendendo o TEA</div>
@@ -81,6 +111,101 @@
         <p>Cada pessoa no espectro é única</p>
       </div>
     </div>
+    <div class="facts-row reveal" style="margin-top:36px;">
+      <a href="index.html#sinais" class="btn-primary"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Ver sinais de alerta</a>
+      <a href="index.html#quiz" class="btn-outline"><i class="fa-solid fa-clipboard" aria-hidden="true"></i> Fazer o questionário</a>
+    </div>
   </section>
+</main>
+
+<footer>
+        <div class="fuuti1">
+            <div class="fuuti">
+    <h3><i class="fa-solid fa-ribbon" style="color: rgb(54, 82, 241);"></i>Laço Azul </h3>
+    <p>Informacão e apoio sobre o Transtorno do Espectro Autista</p>
+    </div>
+    <div class="fuuti">
+
+    <ul>
+        <li><h4>Navegação</h4></li>
+        <li><a href="index.html">início</a></li>
+        <li><a href="oq-e-tea.html">O que é Autismo</a></li>
+        <li><a href="index.html#quiz">Questionário</a></li>
+        <li><a href="diario.html">Meu Diário</a></li>
+    </ul>
+</div>
+<div class="fuuti">
+
+     <ul>
+        <li><h4>Recursos</h4></li>
+        <li><a href="index.html#sinais">Para Pais</a></li>
+        <li><a href="index.html#adultos">Para Adultos</a></li>
+        <li><a href="index.html#educadores">Para Educadores</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+     </ul>
+    </div>
+    <div class="fuuti">
+
+     <ul>
+        <li><h4>Contato</h4></li>
+        <li><i class="fa-solid fa-envelope" style="color: rgb(168, 169, 175);"></i></li>
+        <li>inclu.autismo@gmail.com</li>
+        <li><i class="fa-solid fa-phone" style="color: rgb(168, 169, 175);"></i></li>
+        <li>(88) 99232-657</li>
+     </ul>
+    </div>
+    </div>
+<hr>
+<br>2026 Laço Azul. Todos os direitos reservados.
+</footer>
+
+<script>
+  /* ── ACCESSIBILITY ── */
+  let fontScale = 1;
+  let calmMode = false;
+
+  function toggleDark() {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    document.documentElement.dataset.theme = isDark ? '' : 'dark';
+    document.getElementById('btnDark').classList.toggle('active', !isDark);
+  }
+  function toggleContrast() {
+    const isHigh = document.documentElement.dataset.contrast === 'high';
+    document.documentElement.dataset.contrast = isHigh ? '' : 'high';
+    document.getElementById('btnContrast').classList.toggle('active', !isHigh);
+  }
+  function changeFont(dir) {
+    fontScale = Math.max(0.85, Math.min(1.4, fontScale + dir * 0.1));
+    document.documentElement.style.setProperty('--font-scale', fontScale);
+  }
+  function toggleCalm() {
+    calmMode = !calmMode;
+    document.getElementById('btnCalm').classList.toggle('active', calmMode);
+    const style = document.getElementById('calmStyle') || document.createElement('style');
+    style.id = 'calmStyle';
+    style.textContent = calmMode ? '* { animation: none !important; transition: none !important; }' : '';
+    document.head.appendChild(style);
+  }
+
+  /* ── MOBILE NAV ── */
+  function toggleMobileNav() {
+    const nav = document.getElementById('mobileNav');
+    const btn = document.getElementById('burgerBtn');
+    const isOpen = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  }
+
+  /* ── STICKY HEADER ── */
+  window.addEventListener('scroll', () => {
+    document.querySelector('header').style.boxShadow = window.scrollY > 10 ? 'var(--shadow-md)' : 'var(--shadow-sm)';
+  });
+
+  /* ── SCROLL REVEAL ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => ro.observe(el));
+</script>
 </body>
 </html>

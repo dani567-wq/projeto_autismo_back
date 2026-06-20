@@ -14,6 +14,11 @@ from app.shared.security import get_password_hash
 router = APIRouter(prefix='/users', tags=['users'])
 
 
+@router.get('/me', response_model=UserPublic)
+async def read_current_user(current_user: CurrentUser):
+    return current_user
+
+
 @router.post('/', status_code=HTTPStatus.CREATED, response_model=UserPublic)
 async def create_user(user: UserSchema, session: Session):
     db_user = await session.scalar(

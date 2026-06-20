@@ -24,7 +24,7 @@ print("      OK")
 
 print("[2/2] Iniciando API em http://localhost:8000")
 print("\n  Documentação: http://localhost:8000/docs")
-print("  Site:         abra autismo/jh.html no navegador")
+print("  Site:         abra atismo_dois/index.html no navegador")
 print("\n  Pressione Ctrl+C para parar.\n")
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))

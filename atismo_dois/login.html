@@ -474,7 +474,7 @@
 
   <!-- LEFT PANEL -->
   <aside class="panel-left" aria-hidden="true">
-    <a href="#" class="brand">
+    <a href="index.html" class="brand">
       <div class="brand-icon">🔵</div>
       <div class="brand-name">
         Laço Azul
@@ -574,10 +574,8 @@
         </div>
 
         <button class="btn-submit" id="btn-login" onclick="doLogin()">
-          <a href="atualizado por ultimo.html">
           <span class="btn-text"><i class="fa-solid fa-arrow-right-to-bracket"></i> Entrar</span>
           <div class="spinner"></div>
-          </a>
         </button>
 
         <div class="divider-or">ou</div>
@@ -760,13 +758,22 @@
         }
 
         const data = await res.json();
+
+        // Limpa qualquer token antigo (de outra conta/sessão) antes de salvar o novo,
+        // já que o diário lê de localStorage OU sessionStorage — sem isso, um token
+        // antigo numa das duas poderia "vencer" o login novo.
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('token_type');
+        sessionStorage.removeItem('access_token');
+        sessionStorage.removeItem('token_type');
+
         const storage = remember ? localStorage : sessionStorage;
         storage.setItem('access_token', data.access_token);
         storage.setItem('token_type', data.token_type);
 
         // ✅ Login OK — redireciona para a página principal
         // Ajuste o destino conforme necessário
-        window.location.href = 'jh.html';
+        window.location.href = 'diario.html';
 
       } catch (err) {
         showAlert('login-error', 'Não foi possível conectar ao servidor. Verifique sua conexão.');

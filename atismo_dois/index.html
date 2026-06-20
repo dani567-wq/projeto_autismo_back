@@ -4,16 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laço Azul | Informação, Apoio e Direitos sobre o Autismo</title>
     <link rel="stylesheet" href="inicio.css">
-  <script src="https://kit.fontawesome.com/02c5bff57b.js" crossorigin="anonymous"></script>
-  
-
-
-
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 
 <body>
@@ -44,32 +40,34 @@
 <!-- HEADER -->
 <header>
   <div class="header-inner">
-    <a href="#" class="logo" aria-label="EspectroVivo - Página inicial">
+    <a href="index.html" class="logo" aria-label="Laço Azul - Página inicial">
       <div class="logo-icon" aria-hidden="true"><i class="fa-solid fa-infinity"></i></div>
       laço azul
     </a>
     <nav aria-label="Navegação principal">
-      <a href="#oquee" class="active">O que é TEA</a>
+      <a href="oq-e-tea.html">O que é TEA</a>
       <a href="#sinais">Sinais</a>
       <a href="#direitos">Direitos</a>
       <a href="#educadores">Educadores</a>
       <a href="#adultos">Adultos</a>
       <a href="#ajuda">Onde buscar ajuda</a>
-      <a href="pag-diario.html" class="nav-cta">Meu Diário</a>
+      <a href="#contato">Contato</a>
+      <a href="diario.html" class="nav-cta">Meu Diário</a>
     </nav>
     <button class="burger" onclick="toggleMobileNav()" aria-label="Abrir menu" aria-expanded="false" id="burgerBtn">
       <i class="fa-solid fa-bars"></i>
     </button>
   </div>
   <nav class="mobile-nav" id="mobileNav" aria-label="Menu mobile">
-    <a href="#oquee">O que é TEA</a>
+    <a href="oq-e-tea.html">O que é TEA</a>
     <a href="#sinais">Sinais</a>
     <a href="#direitos">Direitos</a>
     <a href="#educadores">Educadores</a>
     <a href="#adultos">Adultos</a>
     <a href="#ajuda">Onde buscar ajuda</a>
-    <a href="#diario">Meu Diário</a>
     <a href="#contato">Fale com especialista</a>
+    <a href="diario.html">Meu Diário</a>
+    <a href="login.html">Entrar / Cadastrar</a>
   </nav>
 </header>
 
@@ -81,7 +79,7 @@
             Autista.</p>
 
         <div class="user">
-            <button><i class="fa-solid fa-users"></i><a href=""> Login</a> </button>
+            <button onclick="window.location.href='login.html'"><i class="fa-solid fa-users"></i><a href="login.html"> Login</a> </button>
             
         </div>
                 </div>
@@ -90,7 +88,7 @@
             </div>
     </section>
 
-    <main>
+    <main id="main">
         <h2>Por que o laço Azul?</h2>
 
          <div class="geral">
@@ -113,23 +111,7 @@
 
         </div>
 
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EspectroVivo | Informação, Apoio e Direitos</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-</head>
-<body>
-
-
-<!-- MAIN -->
-<main id="main">
-
-  <!-- ── HERO ── -->
+  <!-- ── HERO (perfil) ── -->
   <section style="background: linear-gradient(180deg, var(--blue-ghost) 0%, var(--bg) 100%);" aria-labelledby="hero-title">
     <div class="hero">
       <div>
@@ -142,7 +124,7 @@
         </p>
         <div class="hero-btns">
           <a href="oq-e-tea.html" class="btn-primary"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Entender o TEA</a>
-          <a href="pag-diario.html" class="btn-outline"><i class="fa-solid fa-pencil" aria-hidden="true"></i> Meu Diário</a>
+          <a href="diario.html" class="btn-outline"><i class="fa-solid fa-pencil" aria-hidden="true"></i> Meu Diário</a>
         </div>
       </div>
       <div class="hero-visual" aria-label="Atalhos por perfil de usuário">
@@ -228,7 +210,7 @@
   <hr class="divider"/>
 
   <!-- ── QUIZ ── -->
-  <section class="section" aria-labelledby="quiz-title">
+  <section id="quiz" class="section" aria-labelledby="quiz-title">
     <div class="section-label">Checklist orientativo</div>
     <h2 class="section-title reveal" id="quiz-title">Questionário de Orientação</h2>
     <p class="section-sub reveal">Responda às perguntas abaixo para ter uma orientação inicial. <strong>Não é diagnóstico.</strong> O resultado apenas indica se vale buscar avaliação profissional.</p>
@@ -557,11 +539,13 @@
           <input type="checkbox" id="c-lgpd" required/>
           <label for="c-lgpd">Autorizo o uso dos meus dados para retorno de contato, conforme a <strong>LGPD (Lei nº 13.709/2018)</strong>. Seus dados não serão compartilhados.</label>
         </div>
-        <button class="btn-primary" onclick="submitForm()" aria-label="Enviar formulário de contato">
+        <button class="btn-primary" id="btnContato" onclick="submitForm()" aria-label="Enviar formulário de contato">
           <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Enviar mensagem
         </button>
         <div id="form-success" style="display:none;margin-top:14px;padding:12px 18px;background:#d1fae5;border-radius:var(--radius);color:#065f46;font-family:var(--font);font-weight:700;" role="status" aria-live="polite">
           ✅ Mensagem enviada! Retornaremos em breve.
+        </div>
+        <div id="form-error" style="display:none;margin-top:14px;padding:12px 18px;background:#fee2e2;border-radius:var(--radius);color:#991b1b;font-family:var(--font);font-weight:700;" role="alert" aria-live="polite">
         </div>
       </div>
       <div class="contact-info reveal reveal-d1">
@@ -587,7 +571,65 @@
     </div>
   </section>
 
+  <!-- ── VÍDEO EXPLICATIVO ── -->
+  <section class="tea">
+      <h1>Entenda melhor o Autismo</h1>
+      <p>Assista a esse vídeo infromativo sobre o TEA</p>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/sifF05eJQf8?si=D50ztay-qp7mRB8D" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </section>
+
+  <!-- ── CTA FINAL ── -->
+  <section class="fim">
+      <h1>Pronto para começar?</h1>
+      <p>Faça o nosso questionário inicial ou explore nossos recursos</p>
+     <div class="but">
+      <button onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})"><i class="fa-solid fa-clipboard" style="color: rgb(130, 171,233);"></i>Fazer Questionário</button>
+      <button onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'})"><i class="fa-solid fa-phone" style="color: rgb(130, 171, 233);"></i>Falar com Especialista</button>
+  </div>
+  </section>
+
 </main>
+
+<footer>
+        <div class="fuuti1">
+            <div class="fuuti">
+    <h3><i class="fa-solid fa-ribbon" style="color: rgb(54, 82, 241);"></i>Laço Azul </h3>
+    <p>Informacão e apoio sobre o Transtorno do Espectro Autista</p>
+    </div>
+    <div class="fuuti">
+
+    <ul>
+        <li><h4>Navegação</h4></li>
+        <li><a href="index.html">início</a></li>
+        <li><a href="oq-e-tea.html">O que é Autismo</a></li>
+        <li><a href="#quiz">Questionário</a></li>
+        <li><a href="diario.html">Meu Diário</a></li>
+    </ul>
+</div>
+<div class="fuuti">
+
+     <ul>
+        <li><h4>Recursos</h4></li>
+        <li><a href="#sinais">Para Pais</a></li>
+        <li><a href="#adultos">Para Adultos</a></li>
+        <li><a href="#educadores">Para Educadores</a></li>
+        <li><a href="#contato">Contato</a></li>
+     </ul>
+    </div>
+    <div class="fuuti">
+
+     <ul>
+        <li><h4>Contato</h4></li>
+        <li><i class="fa-solid fa-envelope" style="color: rgb(168, 169, 175);"></i></li>
+        <li>inclu.autismo@gmail.com</li>
+        <li><i class="fa-solid fa-phone" style="color: rgb(168, 169, 175);"></i></li>
+        <li>(88) 99232-657</li>
+     </ul>
+    </div>
+    </div>
+<hr>
+<br>2026 Laço Azul. Todos os direitos reservados.
+</footer>
 
 <script>
   /* ── ACCESSIBILITY ── */
@@ -727,7 +769,7 @@
     renderQuiz();
   }
 
-  /* ── DIARY ── */
+  /* ── DIARY (legado, mantido por compatibilidade com versões antigas da página) ── */
   function selectEmoji(btn, group) {
     btn.closest('.emoji-row').querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
@@ -735,19 +777,62 @@
   function updateRange(input, valId) {
     document.getElementById(valId).textContent = input.value;
   }
-  function saveDiary(type) {
-    const today = new Date().toISOString().split('T')[0];
-    const msgId = type === 'crianca' ? 'diary-saved-msg' : 'diary-saved-msg-adulto';
-    const msg = document.getElementById(msgId);
-    msg.classList.add('show');
-    setTimeout(() => msg.classList.remove('show'), 3000);
-  }
 
-  /* ── FORM ── */
-  function submitForm() {
+  /* ── FORM (Fale com especialista → POST /contato/) ── */
+  const API_BASE = 'http://localhost:8000';
+
+  async function submitForm() {
     const lgpd = document.getElementById('c-lgpd').checked;
     if (!lgpd) { alert('Por favor, autorize o uso dos seus dados para prosseguir.'); return; }
-    document.getElementById('form-success').style.display = 'block';
+
+    const nome = document.getElementById('c-nome').value.trim();
+    const telefone = document.getElementById('c-tel').value.trim();
+    const idade = document.getElementById('c-idade').value.trim();
+    const tipo = document.getElementById('c-tipo').value;
+    const mensagem = document.getElementById('c-msg').value.trim();
+
+    const errBox = document.getElementById('form-error');
+    const okBox = document.getElementById('form-success');
+    errBox.style.display = 'none';
+    okBox.style.display = 'none';
+
+    if (!nome || !telefone) {
+      errBox.textContent = '⚠️ Preencha ao menos o nome e o telefone/WhatsApp.';
+      errBox.style.display = 'block';
+      return;
+    }
+
+    const btn = document.getElementById('btnContato');
+    btn.disabled = true;
+    const originalHtml = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+
+    try {
+      const res = await fetch(`${API_BASE}/contato/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, telefone, idade, tipo, mensagem }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        errBox.textContent = '⚠️ ' + (data?.detail || 'Não foi possível enviar sua mensagem. Tente novamente.');
+        errBox.style.display = 'block';
+        return;
+      }
+
+      okBox.style.display = 'block';
+      ['c-nome', 'c-idade', 'c-tel', 'c-msg'].forEach(id => { document.getElementById(id).value = ''; });
+      document.getElementById('c-tipo').value = '';
+      document.getElementById('c-lgpd').checked = false;
+
+    } catch (e) {
+      errBox.textContent = '⚠️ Sem conexão com o servidor. Verifique se a API está rodando.';
+      errBox.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+    }
   }
 
   /* ── SCROLL REVEAL ── */
@@ -757,75 +842,8 @@
   }, { threshold: 0.12 });
   revealEls.forEach(el => ro.observe(el));
 
-  /* ── SET TODAY DATE ── */
-  const today = new Date().toISOString().split('T')[0];
-  ['d-data','da-data'].forEach(id => { const el = document.getElementById(id); if(el) el.value = today; });
-
   /* ── INIT QUIZ ── */
   renderQuiz();
 </script>
 </body>
-</html>
-
-<section class="tea">
-    <h1>Entenda melhor o Autismo</h1>
-    <p>Assista a esse vídeo infromativo sobre o TEA</p>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/sifF05eJQf8?si=D50ztay-qp7mRB8D" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</section>
-<section class="fim">
-    <h1>Pronto para começar?</h1>
-    <p>Faça o nosso questionário inicial ou explore nossos recursos</p>
-   <div class="but">
-    <button><i class="fa-solid fa-clipboard" style="color: rgb(130, 171,233);"></i>Fazer Questionário</button>
-    <button><i class="fa-solid fa-phone" style="color: rgb(130, 171, 233);"></i>Falar com Especialista</button>
-</div>
-</section>
-
-    </main>
-
-    <footer>
-            <div class="fuuti1">
-                <div class="fuuti">
-        <h3><i class="fa-solid fa-ribbon" style="color: rgb(54, 82, 241);"></i>Laço Azul </h3>
-        <p>Informacão e apoio sobre o Transtorno do Espectro Autista</p>
-        </div>
-        <div class="fuuti">
-        
-        <ul>
-            <li><h4>Navegação</h4></li>
-<li>início</li>
-<li>O que é Autismo</li>
-<li>Questionário</li>
-<li>Meu Diário</li>
-        </ul>
-    </div>
-    <div class="fuuti">
-      
-         <ul>
-            <li><h4>Recursos</h4></li>
-            <li>Para Pais</li>
-            <li>Para Adultos</li>
-            <li>Para Educadores</li>
-            <li>Contato</li>
-         </ul>
-        </div>
-        <div class="fuuti">
-         
-         <ul>
-            <li><h4>Contato</h4></li>
-            <li><i class="fa-solid fa-envelope" style="color: rgb(168, 169, 175);"></i></li>
-            <li>inclu.autismo@gmail.com</li>
-            <li><i class="fa-solid fa-phone" style="color: rgb(168, 169, 175);"></i></li>
-            <li>(88) 99232-657</li>
-         </ul>
-        </div>
-        </div>
-<hr>
-<br>2026 Laço Azul. Todos os direitos reservados.
-    </footer>
-    
-
-
-</body>
-
 </html>
