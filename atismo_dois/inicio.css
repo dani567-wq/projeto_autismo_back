@@ -14,13 +14,11 @@
         }
 
         header {
-           
-            color: rgb(3, 2, 2);
-            
-            display: flex;
-            justify-content: space-between;
-           margin: 10px 100px 10px 100px;
-            
+  position: sticky; top: 0; z-index: 200;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+
     
 }
         header ul, a{
@@ -62,18 +60,20 @@ background-color: rgb();
             color: rgb(0, 0, 0);
             transform: scale(1.15);
         }
-
-
-    .geral{
-        display: flex;
-        justify-content: space-around;
-        margin-left: 300px;
-        margin-right: 300px;
-        gap: 30px;
-    }
+.geral{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 30px;
+    margin-bottom: 40px;
+}
 .ic, .qi, .Aa {
 color: rgb(0, 0, 0);
-width: 300px;
+width: 100%;
+max-width: 300px;
+box-sizing: border-box;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -97,6 +97,7 @@ background-color: white;
  .tea{
     background-color: rgb(223, 238, 253);
     width: 100%;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -106,6 +107,7 @@ background-color: white;
  .fim{
     background-color: rgb(48, 133, 218);
     width: 100%;
+    box-sizing: border-box;
  display: flex;
          align-items: center;
 flex-direction: column;
@@ -233,12 +235,12 @@ hr{
     .skip-link:focus { top: 16px; }
 
     /* ── ACCESSIBILITY BAR ─────────────────────────────── */
-    .a11y-bar {
-      background: var(--blue-deep);
-      padding: 8px 40px;
-      display: flex; align-items: center; gap: 8px; justify-content: flex-end;
-      flex-wrap: wrap;
-    }
+  .a11y-bar {
+  background: var(--blue-deep);
+  padding: 8px 40px;
+  display: flex; align-items: center; gap: 8px; justify-content: center;
+  flex-wrap: wrap;
+}
     .a11y-bar span { color: rgba(255,255,255,.55); font-size: .72rem; font-family: var(--font); letter-spacing:.05em; margin-right: 4px; }
     .a11y-btn {
       background: rgba(255,255,255,.12);
@@ -317,7 +319,7 @@ hr{
     /* ── HERO ──────────────────────────────────────────── */
     .hero {
       max-width: 1100px; margin: 0 auto;
-      padding: 80px 32px 70px;
+      padding: 40px 32px 70px;
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 60px; align-items: center;
     }
@@ -402,7 +404,9 @@ hr{
 
     /* ── SECTIONS ──────────────────────────────────────── */
     .section {
-      max-width: 1100px; margin: 0 auto;
+      max-width: 1100px;
+      
+      margin: 0 auto;
       padding: 70px 32px;
     }
     .section-label {
@@ -425,10 +429,11 @@ hr{
       color: var(--text-soft); font-size: 1rem;
       max-width: 560px; line-height: 1.75; margin-bottom: 44px;
     }
-    .divider {
-      border: none; border-top: 1px solid var(--border);
-      margin: 0;
-    }
+.divider {
+  border: none; border-top: 1px solid var(--border);
+  max-width: 1100px;
+  margin: 60px auto;
+}
     .bg-soft { background: var(--blue-ghost); }
     .bg-teal { background: linear-gradient(135deg, #e8f7f5 0%, var(--blue-ghost) 100%); }
 
